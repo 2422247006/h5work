@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import manage from '@/pages/manage'
-import home from '@/pages/home/home.vue'
-// import about from '@/pages/about'
-// import product from '@/pages/product'
+import home from '@/pages/home.vue'
+import city from '@/pages/city.vue'
+import choice from '@/pages/choice.vue'
 
 
 Vue.use(Router)
@@ -20,17 +20,18 @@ export default new Router({
                 component: home,
                 meta: [],
                 },
-                // {
-                //     path: '/about',
-                //     component: about,
-                //     meta: [],
-                // },
-                // {
-                //     path: '/product',
-                //     component: product,
-                //     meta: [],
-                //     }
             ]
+        },
+        {
+            path: '/city',
+            component: city,
+            name: 'city'
+        },
+        {
+            path: '/choice',
+            component: choice,
+            name: 'choice'
         }
+        
     ]
 })

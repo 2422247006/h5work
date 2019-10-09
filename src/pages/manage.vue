@@ -19,11 +19,9 @@
 
 <script>
 // import { Button } from "vant";
-import img1 from "@/assets/icon/m1.png";
 import img2 from "@/assets/icon/m2.png";
 import img3 from "@/assets/icon/m3.png";
 import img4 from "@/assets/icon/m4.png";
-import img1_ from "@/assets/icon/m1_.png";
 import img2_ from "@/assets/icon/m2_.png";
 import img3_ from "@/assets/icon/m3_.png";
 import img4_ from "@/assets/icon/m4_.png";
@@ -36,10 +34,9 @@ export default {
     return {
       changeactive:0,
       list: [
-        { id: 0, imgurl: img1,imgurl_: img1_, name: "首页",title:"首页"},
-        { id: 1, imgurl: img2, imgurl_: img2_,name: "预约",title:"门店选择" },
-        { id: 2, imgurl: img3, imgurl_: img3_,name: "订单",title:"我的订单"},
-        { id: 3, imgurl: img4,imgurl_: img4_, name: "我的",title:"个人中心" }
+        { id: 0, imgurl: img2, imgurl_: img2_,name: "预约",title:"门店选择" },
+        { id: 1, imgurl: img3, imgurl_: img3_,name: "订单",title:"我的订单"},
+        { id: 2, imgurl: img4,imgurl_: img4_, name: "我的",title:"个人中心" }
       ]
     };
   },
@@ -59,7 +56,7 @@ export default {
     }
   },
   mounted (){
-    document.title = "首页"
+    document.title = "门店选择"
   }
 };
 </script>
