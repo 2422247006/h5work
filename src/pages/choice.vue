@@ -48,7 +48,7 @@
                 <span class="p6">元起</span>
               </p>
             </div>
-            <div class="abs">选套系</div>
+            <div class="abs" @click="showclick">选套系</div>
           </li>
           <li>
             <img src="@/assets/image/time2.jpg" class="imglist" />
@@ -149,8 +149,8 @@ export default {
   },
   mounted() {
     // 一次性计算赋值，减少滚动计算节点位置次数
-     this.distance_team = document.querySelector('#team').offsetTop - 60
-      this.distance_contact = document.querySelector('#contact').offsetTop - 60
+    this.distance_team = document.querySelector("#team").offsetTop - 250;
+    this.distance_contact = document.querySelector("#contact").offsetTop - 250;
     this.$nextTick(function() {
       document.querySelector("#app").addEventListener("scroll", this.onScroll);
     });
@@ -163,15 +163,23 @@ export default {
       toElement.scrollIntoView(this.scrollIntoViewOptions);
     },
     onScroll() {
-      const scrolled = document.querySelector('.app-main').scrollTop;
-      console.log(scrolled)
+      const scrolled = document.querySelector(".app-main").scrollTop;
+      console.log(scrolled);
       if (scrolled < this.distance_team) {
-          this.active = '#home'
-        } else if (scrolled >= this.distance_team && scrolled < this.distance_contact) {
-          this.active = '#team'
-        } else if (scrolled >= this.distance_contact && scrolled < this.distance_join) {
-          this.active = '#contact'
-        } 
+        this.active = "#home";
+      } else if (
+        scrolled >= this.distance_team &&
+        scrolled < this.distance_contact
+      ) {
+        this.active = "#team";
+      } else if (scrolled >= this.distance_contact) {
+        this.active = "#contact";
+      }
+    },
+    showclick(){
+      this.$router.push({
+        path: "/show"
+      });
     }
   },
   destroyed() {
@@ -181,14 +189,14 @@ export default {
 </script>
 
 <style scoped>
-.app-main{
-    overflow: scroll;
-    height:10rem
+.app-main {
+  overflow: scroll;
+  height: 10rem;
 }
 .page {
   width: 100%;
   height: 100%;
-  background: rgb(227, 227, 230);
+ background: rgb(237, 237, 237);
 }
 .banner {
   width: 100%;
@@ -226,6 +234,7 @@ export default {
 .time {
   padding: 0 0.37rem;
   box-sizing: border-box;
+  background: white;
 }
 .txt {
   margin-left: 0.3rem;

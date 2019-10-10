@@ -81,7 +81,7 @@ export default {
 .page {
   width: 100%;
   height: 100%;
-  background: rgb(227, 227, 230);
+  background: rgb(237, 237, 237);
 }
 .place {
   display: flex;
