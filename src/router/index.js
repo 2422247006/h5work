@@ -7,6 +7,13 @@ import choice from '@/pages/choice.vue'
 import show from '@/pages/show.vue'
 import time from '@/pages/time.vue'
 import order from '@/pages/order.vue'
+import orderall from '@/pages/orderall.vue'
+import updown from '@/pages/updown.vue'
+import my from '@/pages/my.vue'
+import info from '@/pages/info.vue'
+import password from '@/pages/password.vue'
+import agree from '@/pages/agree.vue'
+import register from '@/pages/register.vue'
 
 
 Vue.use(Router)
@@ -23,6 +30,16 @@ export default new Router({
                 component: home,
                 meta: [],
                 },
+                {
+                    path: '/orderall',
+                    component: orderall,
+                    meta: []
+                },
+                {
+                    path: '/my',
+                    component: my,
+                    meta: []
+                }
             ]
         },
         {
@@ -49,6 +66,31 @@ export default new Router({
             path: '/order',
             component: order,
             name: 'order'
+        },
+        {
+            path: '/updown',
+            component: updown,
+            name: 'updown'
+        },
+        {
+            path: '/info',
+            component: info,
+            name: 'info'
+        },
+        {
+            path: '/password',
+            component: password,
+            name: 'password'
+        },
+        {
+            path: '/agree',
+            component: agree,
+            name: 'agree'
+        },
+        {
+            path: '/register',
+            component: register,
+            name:'register'
         }
         
     ]

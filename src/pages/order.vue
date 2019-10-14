@@ -51,7 +51,7 @@
         合计
         <span class="p10">￥229.00</span>
       </p>
-      <p class="p11" @click="timeclick">去支付</p>
+      <p class="p11" @click="payclick">去支付</p>
     </div>
     <van-popup
       v-model="birth"
@@ -69,6 +69,16 @@
     >
       <van-picker show-toolbar :columns="columns" @cancel="onCancel" @confirm="onConfirm" />
     </van-popup>
+    <van-dialog v-model="show" title="请选择支付方式" show-cancel-button style="width:70%;">
+      <van-radio-group v-model="radio" style="padding:0 0.5rem;">
+        <van-radio name="1" class="radio">
+          <span class="p5">微信支付</span>
+        </van-radio>
+        <van-radio name="2" class="radio">
+          <span class="p5">支付宝支付</span>
+        </van-radio>
+      </van-radio-group>
+    </van-dialog>
   </div>
 </template>
 
@@ -76,15 +86,22 @@
 import { DatetimePicker } from "vant";
 import { Popup } from "vant";
 import { Picker } from "vant";
+import { Dialog } from "vant";
+import { RadioGroup, Radio } from "vant";
 export default {
   name: "city",
   components: {
     [DatetimePicker.name]: DatetimePicker,
     [Popup.name]: Popup,
-    [Picker.name]: Picker
+    [Picker.name]: Picker,
+    [Dialog.Component.name]: Dialog.Component,
+    [RadioGroup.name]: RadioGroup,
+    [Radio.name]: Radio
   },
   data() {
     return {
+      radio: 1,
+      show: false,
       birth: false,
       sex: false,
       currentDate: new Date(),
@@ -103,6 +120,9 @@ export default {
     },
     onCancel() {
       Toast("取消");
+    },
+    payclick() {
+      this.show = true;
     }
   }
 };
@@ -186,6 +206,11 @@ export default {
   color: #f0024a;
   font-weight: 700;
 }
+.p5 {
+  font-size: 0.45rem;
+  line-height: 0.53rem;
+  color: #333;
+}
 .p9,
 .p10 {
   font-size: 0.4rem;
@@ -221,6 +246,12 @@ export default {
   background: white;
   padding: 0.37rem;
   box-sizing: border-box;
+}
+.radio {
+  width: 100%;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
 }
 </style>
 <style >

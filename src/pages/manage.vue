@@ -9,7 +9,7 @@
       v-for="(item,index) of list" 
       :key="item.id"
       :class="{navstyle:changeactive==index}"
-      @click="routerclick(index,item.imgurl_,item.title)">
+      @click="routerclick(index,item.imgurl_,item.title,item.url)">
         <img :src="changeactive===index?item.imgurl_:item.imgurl"/>
         {{item.name}}
       </div>
@@ -34,25 +34,25 @@ export default {
     return {
       changeactive:0,
       list: [
-        { id: 0, imgurl: img2, imgurl_: img2_,name: "预约",title:"门店选择" },
-        { id: 1, imgurl: img3, imgurl_: img3_,name: "订单",title:"我的订单"},
-        { id: 2, imgurl: img4,imgurl_: img4_, name: "我的",title:"个人中心" }
+        { id: 0, imgurl: img2, imgurl_: img2_,name: "预约",title:"门店选择",url:'/' },
+        { id: 1, imgurl: img3, imgurl_: img3_,name: "订单",title:"我的订单",url:'/orderall'},
+        { id: 2, imgurl: img4,imgurl_: img4_, name: "我的",title:"个人中心",url:'/my'}
       ]
     };
   },
   methods:{
-    routerclick: function(index,url,title) {
+    routerclick: function(index,imgurl,title,url) {
       var that = this;
       that.changeactive = index;
       document.title = title
-      // that.$router.push({
-      //   path: url
-      // });
-      // if (index == 1) {
-      //   that.show=!that.show
-      // }else{
-      //   that.show=false
-      // }
+      that.$router.push({
+        path: url
+      });
+      if (index == 1) {
+        that.show=!that.show
+      }else{
+        that.show=false
+      }
     }
   },
   mounted (){
