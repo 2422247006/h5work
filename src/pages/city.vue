@@ -60,8 +60,8 @@
 // import city from "./component/city.vue";
 // import swiper from "./component/swiper.vue";
 // import limittime from "./component/limittime.vue";
-import { IndexBar, IndexAnchor } from "vant";
-import { Cell, CellGroup } from "vant";
+import { IndexBar, IndexAnchor,Cell, CellGroup } from "vant";
+
 export default {
   name: "city",
   components: {

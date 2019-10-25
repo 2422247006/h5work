@@ -17,7 +17,7 @@
         <p class="p6">上海市黄浦区徐家汇路268号凯德.晶萃广场 负1层29号（地铁9/13号线马当路站5/6号出口)</p>
         <div class="bottom">
           <a href="tel: 1688888888" class="btn">联系门店</a>
-          <span class="btn">地图导航</span>
+           <a href="https://uri.amap.com/marker?position=经度,维度&name=所在位置名称" class="btn">地图导航</a>
           <span class="btn btncol" @click="choiceclick">立即预约</span>
         </div>
       </li>
