@@ -69,16 +69,6 @@
     >
       <van-picker show-toolbar :columns="columns" @cancel="onCancel" @confirm="onConfirm" />
     </van-popup>
-    <van-dialog v-model="show" title="请选择支付方式" show-cancel-button style="width:70%;">
-      <van-radio-group v-model="radio" style="padding:0 0.5rem;">
-        <van-radio name="1" class="radio">
-          <span class="p5">微信支付</span>
-        </van-radio>
-        <van-radio name="2" class="radio">
-          <span class="p5">支付宝支付</span>
-        </van-radio>
-      </van-radio-group>
-    </van-dialog>
   </div>
 </template>
 
@@ -86,24 +76,20 @@
 import { DatetimePicker } from "vant";
 import { Popup } from "vant";
 import { Picker } from "vant";
-import { Dialog } from "vant";
-import { RadioGroup, Radio } from "vant";
+
 export default {
   name: "city",
   components: {
     [DatetimePicker.name]: DatetimePicker,
     [Popup.name]: Popup,
-    [Picker.name]: Picker,
-    [Dialog.Component.name]: Dialog.Component,
-    [RadioGroup.name]: RadioGroup,
-    [Radio.name]: Radio
+    [Picker.name]: Picker
   },
   data() {
     return {
       radio: 1,
-      show: false,
       birth: false,
       sex: false,
+      minDate:'',
       currentDate: new Date(),
       columns: ["男", "女"]
     };
@@ -121,9 +107,47 @@ export default {
     onCancel() {
       Toast("取消");
     },
-    payclick() {
-      this.show = true;
-    }
+   payclick() {
+      if (typeof WeixinJSBridge == "undefined") {
+        if (document.addEventListener) {
+          document.addEventListener(
+            "WeixinJSBridgeReady",
+            this.onBridgeReady,
+            false
+          );
+        } else if (document.attachEvent) {
+          document.attachEvent("WeixinJSBridgeReady", this.onBridgeReady);
+          document.attachEvent("onWeixinJSBridgeReady", this.onBridgeReady);
+        }
+      } else {
+        this.onBridgeReady();
+      }
+    },
+    //调用微信支付
+    onBridgeReady() {
+      var pay_data = {
+        appId: '',
+        timeStamp:'',
+        nonceStr: '',
+        package: '',
+        signType: '',
+        paySign: ''
+      };
+      console.log(pay_data);
+      var self = this;
+      WeixinJSBridge.invoke("getBrandWCPayRequest", pay_data, function(res) {
+        if (res.err_msg == "get_brand_wcpay_request:ok") {
+
+        } else if (res.err_msg == "get_brand_wcpay_request:cancel") {
+          self.$vux.toast.text("取消支付");
+        } else {
+          self.$vux.toast.text(res.err_msg);
+        }
+      });
+    },
+  },
+  mounted() {
+    
   }
 };
 </script>
