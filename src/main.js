@@ -6,11 +6,12 @@ import AMap from 'vue-amap';
 import axios from "axios";
 Vue.use(AMap);
 
-const apiUrl = "https://www.hfqhj.cn";
-
+const apiUrl = "http://118.25.107.28:8080";
+axios.defaults.withCredentials=true
 Vue.prototype.$axios = axios;
-Vue.prototype.$apuUrl = apiUrl;
+Vue.prototype.$apiUrl = apiUrl;
 Vue.config.productionTip = false
+
 
 // 初始化vue-amap
 AMap.initAMapApiLoader({

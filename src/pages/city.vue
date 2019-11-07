@@ -81,8 +81,25 @@ export default {
     },
     showno() {
       this.key = false;
+    },
+    getinfocity(){
+     var that=this;
+      that.$axios
+        .get("http://118.25.107.28:8080/jfxx/api/v1/store/city", {
+          params: {}
+        })
+        .then(function(res) {
+          console.log(res.data);
+        
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
-  }
+  },
+  mounted() {
+     this.getinfocity()
+  },
 };
 </script>
 
