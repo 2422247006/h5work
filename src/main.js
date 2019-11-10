@@ -6,7 +6,7 @@ import AMap from 'vue-amap';
 import axios from "axios";
 Vue.use(AMap);
 
-const apiUrl = "http://118.25.107.28:8080";
+const apiUrl = "http://106.12.5.191:8080";
 axios.defaults.withCredentials=true
 Vue.prototype.$axios = axios;
 Vue.prototype.$apiUrl = apiUrl;

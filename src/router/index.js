@@ -14,7 +14,6 @@ import info from '@/pages/info.vue'
 import password from '@/pages/password.vue'
 import agree from '@/pages/agree.vue'
 import register from '@/pages/register.vue'
-import map from '@/pages/map.vue'
 
 
 Vue.use(Router)
@@ -92,11 +91,6 @@ export default new Router({
             path: '/register',
             component: register,
             name:'register'
-        },
-        {
-            path: '/map',
-            component:map,
-            name:'map'
         }
         
     ]

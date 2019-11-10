@@ -184,6 +184,9 @@ export default {
   },
   destroyed() {
     window.removeEventListener("scroll", this.onScroll, true);
+  },
+  mounted(){
+    console.log(this.$route.query.id)
   }
 };
 </script>

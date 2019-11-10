@@ -2,47 +2,23 @@
   <div class="page">
     <div class="place">
       <span class="p1">当前城市:</span>
-      <span class="p2">上海</span>
+      <span class="p2">{{cityname}}</span>
       <div class="p3wrap" @click="cityclick">
         <span class="p3">切换城市</span>
         <img src="@/assets/icon/jump.png" class="jump" />
       </div>
     </div>
     <ul>
-      <li>
+      <li v-for="item of homeList" :key="item.id">
         <div class="top">
-          <img src="@/assets/image/1136.jpg" class="img" />
+          <img :src="item.storeImg" class="img" />
         </div>
-        <p class="p5">上海凯德LUOne大师店</p>
-        <p class="p6">上海市黄浦区徐家汇路268号凯德.晶萃广场 负1层29号（地铁9/13号线马当路站5/6号出口)</p>
+        <p class="p5">{{item.storeName}}</p>
+        <p class="p6">{{item.storeAddr}}</p>
         <div class="bottom">
-          <a href="tel: 1688888888" class="btn">联系门店</a>
-           <a href="https://uri.amap.com/marker?position=经度,维度&name=所在位置名称" class="btn">地图导航</a>
-          <span class="btn btncol" @click="choiceclick">立即预约</span>
-        </div>
-      </li>
-      <li>
-        <div class="top">
-          <img src="@/assets/image/1136.jpg" class="img" />
-        </div>
-        <p class="p5">上海凯德LUOne大师店</p>
-        <p class="p6">上海市黄浦区徐家汇路268号凯德.晶萃广场 负1层29号（地铁9/13号线马当路站5/6号出口)</p>
-        <div class="bottom">
-         <a href="tel: 1688888888" class="btn">联系门店</a>
-          <span class="btn">地图导航</span>
-          <span class="btn btncol">立即预约</span>
-        </div>
-      </li>
-      <li>
-        <div class="top">
-          <img src="@/assets/image/1136.jpg" class="img" />
-        </div>
-        <p class="p5">上海凯德LUOne大师店</p>
-        <p class="p6">上海市黄浦区徐家汇路268号凯德.晶萃广场 负1层29号（地铁9/13号线马当路站5/6号出口)</p>
-        <div class="bottom">
-           <a href="tel: 1688888888" class="btn">联系门店</a>
-          <span class="btn">地图导航</span>
-          <span class="btn btncol">立即预约</span>
+          <a :href="'tel: '+item.storeTel" class="btn">联系门店</a>
+        <a :href="'https://uri.amap.com/marker?position=经度,维度&name='+item.storeName" class="btn">地图导航</a>
+          <span class="btn btncol" @click="choiceclick(item.id)">立即预约</span>
         </div>
       </li>
     </ul>
@@ -55,23 +31,57 @@ export default {
   name: "home",
   data() {
     return {
-      show:false
+      show: false,
+      cityname: "上海",
+      homeList: [],
+      cityid: 21
     };
   },
   components: {
-    [Popup.name]:Popup
+    [Popup.name]: Popup
+  },
+  watch: {
+    cityid() {
+      alert(123)
+      this.getinfohome();
+    }
   },
   methods: {
+    getinfohome() {
+      var that = this;
+      that.$axios
+        .get(that.$apiUrl + "/jfxx/api/v1/store/list/" + that.cityid, {
+          params: {}
+        })
+        .then(function(res) {
+          // console.log(res.data.data);
+          that.homeList = res.data.data;
+        });
+    },
     cityclick() {
       this.$router.push({
         path: "/city"
       });
     },
-    choiceclick(){
+    choiceclick(id) {
       this.$router.push({
-        path: "/choice"
+        path: "/choice",
+        query: { id: id }
       });
     }
+  },
+  created() {
+    this.getinfohome();
+  },
+  mounted() {
+    // this.getinfohome();
+    if (this.$route.query.name && this.$route.query.id) {
+      this.cityname = this.$route.query.name;
+      this.cityid = this.$route.query.id;
+    }
+
+    console.log(this.cityname);
+    console.log(this.cityid);
   }
 };
 </script>
@@ -201,17 +211,17 @@ li {
 </style>
 <style>
 .van-dialog__header {
-    padding-top: 24px;
-    font-weight: 500;
-    line-height: 24px;
-    text-align: center;
-    font-size: 0.4rem;
+  padding-top: 24px;
+  font-weight: 500;
+  line-height: 24px;
+  text-align: center;
+  font-size: 0.4rem;
 }
-.van-dialog__message{
- font-size: 0.5rem;
+.van-dialog__message {
+  font-size: 0.5rem;
 }
-.van-button__text{
-   font-size: 0.5rem;
+.van-button__text {
+  font-size: 0.5rem;
 }
 </style>
 

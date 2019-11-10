@@ -1,10 +1,10 @@
 <template>
   <div class="page">
-    <div class="searchwrap">
+    <!-- <div class="searchwrap">
       <img src="@/assets/icon/s.png" class="sericon" />
       <input type="search" placeholder="搜索你的城市" class="search" v-model="keyword" />
-    </div>
-    <div class="list" v-if="keyword">
+    </div> -->
+    <!-- <div class="list" v-if="keyword">
       <ul>
         <li>北京</li>
         <li>北京</li>
@@ -52,7 +52,10 @@
       <van-cell title="文本" />
       <van-cell title="文本" />
       <van-cell title="文本" />
-    </van-index-bar>
+    </van-index-bar> -->
+    <ul>
+      <li v-for="item of cityList" :key="item.id" @click="routerclick(item.id,item.name)">{{item.name}}</li>
+    </ul>
   </div>
 </template>
 
@@ -60,41 +63,46 @@
 // import city from "./component/city.vue";
 // import swiper from "./component/swiper.vue";
 // import limittime from "./component/limittime.vue";
-import { IndexBar, IndexAnchor,Cell, CellGroup } from "vant";
+// import { IndexBar, IndexAnchor,Cell, CellGroup } from "vant";
 
 export default {
   name: "city",
-  components: {
-    [IndexBar.name]: IndexBar,
-    [IndexAnchor.name]: IndexAnchor,
-    [Cell.name]: Cell,
-    [CellGroup.name]: CellGroup
-  },
+  // components: {
+  //   [IndexBar.name]: IndexBar,
+  //   [IndexAnchor.name]: IndexAnchor,
+  //   [Cell.name]: Cell,
+  //   [CellGroup.name]: CellGroup
+  // },
   data() {
     return {
-     keyword:''
+    //  keyword:''
+    cityList:[]
     };
   },
   methods: {
-    show() {
-      this.key = true;
-    },
-    showno() {
-      this.key = false;
-    },
+    // show() {
+    //   this.key = true;
+    // },
+    // showno() {
+    //   this.key = false;
+    // },
     getinfocity(){
      var that=this;
       that.$axios
-        .get("http://118.25.107.28:8080/jfxx/api/v1/store/city", {
+        .get(that.$apiUrl+"/jfxx/api/v1/store/city", {
           params: {}
         })
         .then(function(res) {
-          console.log(res.data);
-        
+         that.cityList=res.data.data
         })
-        .catch(function(error) {
-          console.log(error);
-        });
+    },
+    routerclick(id,name){
+    this.$router.push(
+      { 
+        path: '/', 
+        query: { name: name,id:id }
+        }
+      );
     }
   },
   mounted() {
@@ -105,7 +113,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.van-cell__title span {
+/* .van-cell__title span {
   font-size: 0.4rem;
 }
 .van-index-bar__index {
@@ -154,10 +162,14 @@ export default {
   bottom: 0;
   overflow: scroll;
   padding: 0 0.37rem;
+} */
+.page{
+  padding:0.5rem;
+  box-sizing: border-box;
 }
 ul li {
   font-size: 0.37rem;
   color: #999;
-  margin: 0.3rem 0;
+  margin: 0.5rem 0;
 }
 </style>
