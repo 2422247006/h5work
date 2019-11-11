@@ -10,7 +10,7 @@
       :key="item.id"
       :class="{navstyle:changeactive==index}"
       @click="routerclick(index,item.imgurl_,item.title,item.url)">
-        <img :src="changeactive===index?item.imgurl_:item.imgurl"/>
+        <img :src="changeactive===index?item.imgurl_:item.imgurl" class="imgsize" />
         {{item.name}}
       </div>
     </div>
@@ -65,7 +65,7 @@ export default {
 <style scoped>
 .footer {
   width: 100%;
-  height: 1.39rem;
+  height: 1.2rem;
   box-shadow: 0 0 0.32rem rgba(10, 2, 4, 0.1);
   position: fixed;
   bottom: 0;
@@ -86,5 +86,9 @@ export default {
 }
 .navstyle{
   color:#1989fa;
+}
+.imgsize{
+  width:0.4rem;
+  height:0.4rem;
 }
 </style>

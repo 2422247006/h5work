@@ -5,214 +5,123 @@
       <div class="headerwrap">
         <div class="txt">
           <p class="p">
-            <span class="p1">证件照套餐专区</span>
-            <span class="p2">￥159起</span>
+            <span class="p1">{{showinfo.name}}专区</span>
+            <span class="p2">￥{{showinfo.minPrice}}起</span>
           </p>
           <ul>
             <li>
               <img src="@/assets/icon/s1.png" alt />
               <span class="p3">化妆</span>
-              <span class="p4">一套造型</span>
+              <span class="p4">{{showinfo.model}}</span>
             </li>
             <li>
               <img src="@/assets/icon/s2.png" alt />
               <span class="p3">服装</span>
-              <span class="p4">1至3套服装</span>
+              <span class="p4">{{showinfo.clothing}}</span>
             </li>
             <li>
               <img src="@/assets/icon/s3.png" alt />
               <span class="p3">拍摄</span>
-              <span class="p4">半身照</span>
+              <span class="p4">{{showinfo.background}}</span>
             </li>
             <li>
               <img src="@/assets/icon/s4.png" alt />
               <span class="p3">修图</span>
-              <span class="p4">2张精修照片</span>
+              <span class="p4">{{showinfo.negative}}</span>
             </li>
             <li>
               <img src="@/assets/icon/s1.png" alt />
               <span class="p3">冲印</span>
-              <span class="p4">2种冲印尺寸</span>
+              <span class="p4">{{showinfo.processing}}</span>
             </li>
           </ul>
         </div>
       </div>
       <div class="head">
-        <img src="@/assets/image/time2.jpg" class="headimg" />
+        <img :src="showinfo.indexImg" class="headimg" />
       </div>
       <div class="con">
         <div class="imglist">
-          <van-sticky>
-            <div class="title">
-              <span
-                class="span"
-                v-for="(item,index) of btnlist"
-                :key="item.id"
-                :class="{btnstyle:changeactive==index}"
-                @click="btnclick(index)"
-              >{{item.txt}}</span>
-            </div>
-          </van-sticky>
-          <div class="img_" v-if="!right">
-            <img
-              width="100%"
-              src="https://cdn.haimati.cn/himo/c1d866d6f3b9c080ccfdbd213d8a6f06.jpg"
-            />
-            <img
-              width="100%"
-              src="https://cdn.haimati.cn/himo/0440ae36ce5cbe8b6d7f57f465cdc34e.jpg"
-            />
-            <img
-              width="100%"
-              src="https://cdn.haimati.cn/himo/01944429a0417498449d5ff5803d57fe.jpg"
-            />
-            <img
-              width="100%"
-              src="https://cdn.haimati.cn/himo/dfb4bb30e0e6eb1d58beb5a6ff1361ab.jpg"
-            />
-            <img
-              width="100%"
-              src="https://cdn.haimati.cn/himo/d45e7e26fb7771f070ee6699e249642f.jpg"
-            />
-            <img
-              width="100%"
-              src="https://cdn.haimati.cn/himo/6cf95a140e45b74b602e8eb05879c8d8.jpg"
-            />
-            <img
-              width="100%"
-              src="https://cdn.haimati.cn/himo/b66279bc6f8fc11a4dd1c64f6830dbc4.jpg"
-            />
-            <img
-              width="100%"
-              src="https://cdn.haimati.cn/himo/d5d5f46f5d0d16bc504ae54efd0600d0.jpg"
-            />
-            <img
-              width="100%"
-              src="https://cdn.haimati.cn/himo/8eb36db0900026fe08f66f9a1865c698.jpg"
-            />
-            <img
-              width="100%"
-              src="https://cdn.haimati.cn/himo/c45f34fa30476eaa1e0dd3c7a0043f4a.jpg"
-            />
-            <img
-              width="100%"
-              src="https://cdn.haimati.cn/himo/eb34d7753c48d6c3985a10b3e2ed1fee.jpg"
-            />
-            <img
-              width="100%"
-              src="https://cdn.haimati.cn/himo/02777e8c689371e22e078ac80dd8421f.jpg"
-            />
-            <img
-              width="100%"
-              src="https://cdn.haimati.cn/himo/cd37ebaf962d64fccf68df51118c0be6.png"
-            />
-            <img
-              width="100%"
-              src="https://cdn.haimati.cn/himo/2a0e08c4dda060ec9b025e1aa12b1d42.png"
-            />
-            <img
-              width="100%"
-              src="https://cdn.haimati.cn/himo/58d6e69333d544842410a77242b17f3f.png"
-            />
-            <img
-              width="100%"
-              src="https://cdn.haimati.cn/himo/24966a4a2079d2661c453632e876cdb4.jpeg"
-            />
-            <img
-              width="100%"
-              src="https://cdn.haimati.cn/himo/45c034b32dd78c33afa363c2fd977c80.jpeg"
-            />
-            <img
-              width="100%"
-              src="https://cdn.haimati.cn/himo/c10e1389ffb081197ed40c9dfa478272.jpeg"
-            />
-            <img
-              width="100%"
-              src="https://cdn.haimati.cn/himo/82313332e09f7d73e994795500d10ec9.jpeg"
-            />
-            <img
-              width="100%"
-              src="https://cdn.haimati.cn/himo/5557a09b293e826b837c24db79bcfc08.jpeg"
-            />
-            <img
-              width="100%"
-              src="https://cdn.haimati.cn/himo/e2fb2972cead9120a7eb65a65bcf8491.jpeg"
-            />
-            <img
-              width="100%"
-              src="https://cdn.haimati.cn/himo/82e14f201ee5f4fe2e035393bf9de9b3.jpeg"
-            />
-          </div>
-          <div class="img_" v-if="right">
-            <img
-              width="100%"
-              src="https://cdn.haimati.cn/himo/216a6bf35bc1072ebe95cde4195c4da1.jpg"
-            />
-            <img
-              width="100%"
-              class="clear"
-              src="https://cdn.haimati.cn/himo/8b40aa38bea10165061a521b953e2b52.jpeg"
-              lazy="loaded"
-            />
-          </div>
+          <van-tabs v-model="active" swipeable>
+            <van-tab v-for="item in tablist" :title="item.name" :key="item.id">
+              <div class="img_">
+                <img v-if="item.id==0" width="100%" :src="showinfo.productShow" />
+                <img v-if="item.id==1" width="100%" :src="showinfo.productShow" />
+              </div>
+            </van-tab>
+          </van-tabs>
         </div>
       </div>
     </div>
     <div class="footer" @click="popupclick">立即预约</div>
-    <van-popup v-model="show" round position="bottom" :style="{ height: 'auto',padding:'0.37rem',boxSizing:'border-box' }">
-        <p class="p5">证件照套餐专区</p>
-        <p class="p6">已选：证件照三底色套餐</p>
-        <div class="check">
-            <p class="p7">产品类型</p>
-            <ul class="ul">
-                <li class="p8 p8col">证件照三底色套餐</li>
-                 <li class="p8">证件照三底色套餐</li>
-                  <li class="p8">证件照三底色套餐</li>
-                   
-            </ul>
-        </div>
-        <div class="price">
-            <p class="p9">合计<span class="p10">￥229.00</span></p>
-            <p class="p11" @click="timeclick">下一步</p>
-        </div>
+    <van-popup
+      v-model="show"
+      round
+      position="bottom"
+      :style="{ height: 'auto',padding:'0.37rem',boxSizing:'border-box' }"
+    >
+      <p class="p5">{{showinfo.name}}专区</p>
+      <p class="p6">已选：{{choice}}</p>
+      <div class="check">
+        <p class="p7">产品类型</p>
+        <ul class="ul">
+          <li 
+          class="p8" 
+          v-for="(item,index) in showinfo.comboList" 
+          :key="item.id"
+          :class="{p8col:changeactive==index}"
+          @click="choiceclick(index,item.comboName,item.comboPrice)">
+          {{item.comboName}}</li>
+        </ul>
+      </div>
+      <div class="price">
+        <p class="p9">
+          合计
+          <span class="p10">￥{{price}}</span>
+        </p>
+        <p class="p11" @click="timeclick">下一步</p>
+      </div>
     </van-popup>
   </div>
 </template>
 
 <script>
-import { Sticky } from "vant";
 import { Popup } from "vant";
+import { Tab, Tabs } from "vant";
 export default {
   name: "city",
   components: {
-    [Sticky.name]: Sticky,
-    [Popup.name]: Popup
+    [Popup.name]: Popup,
+    [Tab.name]: Tab,
+    [Tabs.name]: Tabs
   },
   data() {
     return {
+       changeactive:-1,
       show: false,
-      right: false,
-      changeactive: 0,
-      btnlist: [{ id: 0, txt: "产品展示" }, { id: 1, txt: "产品内容" }]
+      tablist: [{ id: 0, name: "产品展示" }, { id: 1, name: "产品内容" }],
+      active: "",
+      price:0,
+      choice:''
     };
   },
   methods: {
-    btnclick(index) {
-      this.changeactive = index;
-      if (index == 0) {
-        this.right = false;
-      } else {
-        this.right = true;
-      }
-    },
     popupclick() {
       this.show = true;
     },
-    timeclick(){
-       this.$router.push({
+    choiceclick(index,name,price){
+ this.changeactive = index;
+ this.choice=name
+ this.price=price
+    },
+    timeclick() {
+      this.$router.push({
         path: "/time"
       });
     }
+  },
+  created() {
+    this.showinfo = this.$route.query.item;
   }
 };
 </script>
@@ -222,7 +131,7 @@ export default {
 .page {
   width: 100%;
   height: 100%;
- background: rgb(237, 237, 237);
+  background: rgb(237, 237, 237);
 }
 .top {
   width: 100%;
@@ -280,7 +189,6 @@ export default {
   align-items: center;
 }
 .p1 {
-    
   font-size: 0.48rem;
   font-weight: 700;
   line-height: 0.67rem;
@@ -375,63 +283,64 @@ li {
   right: 0;
   background-image: linear-gradient(90deg, #1769ff, #142894);
 }
-.p5{
-font-size: .48rem;
-    font-weight: 700;
-    line-height: 1.23rem;
-    color: #161616;
+.p5 {
+  font-size: 0.48rem;
+  font-weight: 700;
+  line-height: 1.23rem;
+  color: #161616;
 }
-.p6{
-    font-size: .32rem;
-    font-weight: 400;
-    line-height: .48rem;
-    color: #919199;
-    text-align: left;
-    white-space: pre-wrap;
+.p6 {
+  font-size: 0.32rem;
+  font-weight: 400;
+  line-height: 0.48rem;
+  color: #919199;
+  text-align: left;
+  white-space: pre-wrap;
 }
-.check{
-    width:100%;
-    margin-top:0.5rem;
-    margin-bottom:1.5rem;
+.check {
+  width: 100%;
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
 }
-.p7{
-    font-size: .37rem;
-    font-weight: 400;
-    line-height: .53rem;
-    color: #333;
+.p7 {
+  font-size: 0.37rem;
+  font-weight: 400;
+  line-height: 0.53rem;
+  color: #333;
 }
-.ul{
-    width:80%;
-    display: flex;
-    flex-wrap: wrap;
+.ul {
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
 }
-.p8{
-    width: 36%;
-    padding: .19rem .2rem;
-    line-height: 1.2;
-    color: #45454d;
-    text-align: center;
-    background: #f2f2f5;
-    border: 1PX solid #f2f2f5;
-    border-radius: .11rem;
-    -webkit-transition: all .2s;
-    transition: all .2s;
-    font-size: .32rem;
-    font-weight: 400;
-    text-emphasis: nowrap;
-    margin:0.15rem;
+.p8 {
+  width: 36%;
+  padding: 0.19rem 0.2rem;
+  line-height: 1.2;
+  color: #45454d;
+  text-align: center;
+  background: #f2f2f5;
+  border: 1px solid #f2f2f5;
+  border-radius: 0.11rem;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  font-size: 0.32rem;
+  font-weight: 400;
+  text-emphasis: nowrap;
+  margin: 0.15rem;
 }
-.p9,.p10{
-    font-size: .4rem;
-    font-weight: 600;
-    line-height: .48rem;
-    color: #16161a;
+.p9,
+.p10 {
+  font-size: 0.4rem;
+  font-weight: 600;
+  line-height: 0.48rem;
+  color: #16161a;
 }
-.p10{
-    color: #f0024a
+.p10 {
+  color: #f0024a;
 }
-.p11{
-    width: 4.8rem;
+.p11 {
+  width: 4.8rem;
   height: 1.17rem;
   line-height: 1.17rem;
   text-align: center;
@@ -442,20 +351,20 @@ font-size: .48rem;
   color: white;
   background-image: linear-gradient(90deg, #1769ff, #142894);
 }
-.price{
-    display:flex;
-    justify-content: space-between;
-    align-items: center;
-    position: absolute;
-    bottom:0;
-    left:5%;
-    right:0;
-    width:85%;
-    height:2rem;
+.price {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  left: 5%;
+  right: 0;
+  width: 85%;
+  height: 2rem;
 }
-.p8col{
-    color: #1769ff;
-    background-color: rgba(23,105,255,.1);
-    border-color: #1769ff;
+.p8col {
+  color: #1769ff;
+  background-color: rgba(23, 105, 255, 0.1);
+  border-color: #1769ff;
 }
 </style>

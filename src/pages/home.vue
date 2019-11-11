@@ -42,7 +42,6 @@ export default {
   },
   watch: {
     cityid() {
-      alert(123)
       this.getinfohome();
     }
   },

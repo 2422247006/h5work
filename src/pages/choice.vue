@@ -3,203 +3,74 @@
     <div class="banner">
       <img src="@/assets/image/1136.jpg" style="width:100%;height:100%;" />
     </div>
-    <van-sticky>
-      <div class="title">
-        <!-- <span class="span"
-        v-for="(item,index) of btnlist" 
-      :key="item.id"
-      :class="{btnstyle:changeactive==index}"
-      @click="btnclick(index)"
-        >{{item.txt}}</span>-->
-        <a
-          class="span"
-          href="javascript:void(0);"
-          :class="active == '#home' ? 'active' : ''"
-          @click="toTarget('#home')"
-        >限时系列</a>
-        <a
-          class="span"
-          href="javascript:void(0);"
-          :class="active == '#team' ? 'active' : ''"
-          @click="toTarget('#team')"
-        >功能类</a>
-        <a
-          class="span"
-          href="javascript:void(0);"
-          :class="active == '#contact' ? 'active' : ''"
-          @click="toTarget('#contact')"
-        >轻写真</a>
-      </div>
-    </van-sticky>
-    <div class="app-main" id="app">
-      <div class="time" id="home">
-        <P class="p">
-          <span class="p1">限时系列</span>
-          <span class="p2">UNIQUE</span>
-        </P>
-        <ul>
-          <li>
-            <img src="@/assets/image/time2.jpg" class="imglist" />
-            <div class="txt">
-              <p class="p3">证件照套餐专区</p>
-              <p class="p4">Package Area</p>
-              <p class="p5">
-                159
-                <span class="p6">元起</span>
-              </p>
-            </div>
-            <div class="abs" @click="showclick">选套系</div>
-          </li>
-          <li>
-            <img src="@/assets/image/time2.jpg" class="imglist" />
-            <div class="txt">
-              <p class="p3">证件照套餐专区</p>
-              <p class="p4">Package Area</p>
-              <p class="p5">
-                159
-                <span class="p6">元起</span>
-              </p>
-            </div>
-            <div class="abs">选套系</div>
-          </li>
-        </ul>
-      </div>
-      <div class="time" id="team">
-        <P class="p">
-          <span class="p1">功能类</span>
-          <span class="p2">HIMO-ID</span>
-        </P>
-        <ul>
-          <li>
-            <img src="@/assets/image/time2.jpg" class="imglist" />
-            <div class="txt">
-              <p class="p3">证件照套餐专区</p>
-              <p class="p4">Package Area</p>
-              <p class="p5">
-                159
-                <span class="p6">元起</span>
-              </p>
-            </div>
-            <div class="abs">选套系</div>
-          </li>
-          <li>
-            <img src="@/assets/image/time2.jpg" class="imglist" />
-            <div class="txt">
-              <p class="p3">证件照套餐专区</p>
-              <p class="p4">Package Area</p>
-              <p class="p5">
-                159
-                <span class="p6">元起</span>
-              </p>
-            </div>
-            <div class="abs">选套系</div>
-          </li>
-        </ul>
-      </div>
-      <div class="time" id="contact">
-        <P class="p">
-          <span class="p1">轻写真</span>
-          <span class="p2">LIGHTO</span>
-        </P>
-        <ul>
-          <li>
-            <img src="@/assets/image/time2.jpg" class="imglist" />
-            <div class="txt">
-              <p class="p3">证件照套餐专区</p>
-              <p class="p4">Package Area</p>
-              <p class="p5">
-                159
-                <span class="p6">元起</span>
-              </p>
-            </div>
-            <div class="abs">选套系</div>
-          </li>
-          <li>
-            <img src="@/assets/image/time2.jpg" class="imglist" />
-            <div class="txt">
-              <p class="p3">证件照套餐专区</p>
-              <p class="p4">Package Area</p>
-              <p class="p5">
-                159
-                <span class="p6">元起</span>
-              </p>
-            </div>
-            <div class="abs">选套系</div>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <van-tabs v-model="active" swipeable>
+      <van-tab v-for="item in choiceList" :title="item.name" :key="item.id">
+        <div class="time" id="home">
+          <ul>
+            <li v-for="itemchild in item.productList" :key="itemchild.id">
+              <img :src="itemchild.indexImg" class="imglist" />
+              <div class="txt">
+                <p class="p3">{{itemchild.name}}</p>
+                <p class="p4">Package Area</p>
+                <p class="p5">
+                  {{itemchild.minPrice}}
+                  <span class="p6">元起</span>
+                </p>
+              </div>
+              <div class="abs" @click="showclick(itemchild)">选套系</div>
+            </li>
+          </ul>
+        </div>
+      </van-tab>
+    </van-tabs>
   </div>
 </template>
 <script>
-import { Sticky } from "vant";
+import { Tab, Tabs } from "vant";
 export default {
   name: "choice",
   components: {
-    [Sticky.name]: Sticky
+    [Tab.name]: Tab,
+    [Tabs.name]: Tabs
   },
   data() {
     return {
-      active: "#home",
-      scrollIntoViewOptions: {
-        block: "center",
-        behavior: "smooth"
-      }
+      active: "",
+      choiceList:[]
     };
   },
-  mounted() {
-    // 一次性计算赋值，减少滚动计算节点位置次数
-    this.distance_team = document.querySelector("#team").offsetTop - 250;
-    this.distance_contact = document.querySelector("#contact").offsetTop - 250;
-    this.$nextTick(function() {
-      document.querySelector("#app").addEventListener("scroll", this.onScroll);
-    });
-    window.addEventListener("scroll", this.onScroll, true);
-  },
+
   methods: {
-    toTarget(target) {
-      this.active = target;
-      const toElement = document.querySelector(target);
-      toElement.scrollIntoView(this.scrollIntoViewOptions);
+     getinfochoice(){
+     var that=this;
+      that.$axios
+        .get(that.$apiUrl+"/jfxx/api/v1/product/list", {
+          params: {}
+        })
+        .then(function(res) {
+          console.log(res.data.data)
+         that.choiceList=res.data.data
+        })
     },
-    onScroll() {
-      const scrolled = document.querySelector(".app-main").scrollTop;
-      console.log(scrolled);
-      if (scrolled < this.distance_team) {
-        this.active = "#home";
-      } else if (
-        scrolled >= this.distance_team &&
-        scrolled < this.distance_contact
-      ) {
-        this.active = "#team";
-      } else if (scrolled >= this.distance_contact) {
-        this.active = "#contact";
-      }
-    },
-    showclick(){
+    showclick(item) {
       this.$router.push({
-        path: "/show"
+        path: "/show",
+         query: { item: item }
       });
     }
   },
-  destroyed() {
-    window.removeEventListener("scroll", this.onScroll, true);
-  },
-  mounted(){
-    console.log(this.$route.query.id)
-  }
+created() {
+   // console.log(this.$route.query.id);
+    this.getinfochoice()
+}
 };
 </script>
 
 <style scoped>
-.app-main {
-  overflow: scroll;
-  height: 10rem;
-}
 .page {
   width: 100%;
   height: 100%;
- background: rgb(237, 237, 237);
+  background: rgb(237, 237, 237);
 }
 .banner {
   width: 100%;
@@ -261,6 +132,8 @@ export default {
 ul {
   width: 100%;
   height: auto;
+  padding:0.5rem 0rem;
+  box-sizing: border-box;
 }
 li {
   width: 100%;
