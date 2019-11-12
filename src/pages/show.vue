@@ -122,6 +122,8 @@ export default {
   },
   created() {
     this.showinfo = this.$route.query.item;
+    var date=new Date()
+    console.log(date)
   }
 };
 </script>

@@ -44,7 +44,7 @@ export default {
      getinfochoice(){
      var that=this;
       that.$axios
-        .get(that.$apiUrl+"/jfxx/api/v1/product/list", {
+        .get(that.$apiUrl+"/jfxx-0.1/api/v1/product/list", {
           params: {}
         })
         .then(function(res) {

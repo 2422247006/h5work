@@ -49,7 +49,7 @@ export default {
     getinfohome() {
       var that = this;
       that.$axios
-        .get(that.$apiUrl + "/jfxx/api/v1/store/list/" + that.cityid, {
+        .get(that.$apiUrl + "/jfxx-0.1/api/v1/store/list/" + that.cityid, {
           params: {}
         })
         .then(function(res) {
