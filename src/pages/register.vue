@@ -35,6 +35,19 @@ export default {
           time--;
         }
       }, 1000);
+    },
+    getyzm(){
+        var that=this
+         that.$axios
+        .get(that.$apiUrl + "/jfxx-0.1/api/v1/user/login/verifyCode", {
+          params: {
+              phone:15044003242
+          }
+        })
+        .then(function(res) {
+          console.log(res.data.data);
+        //   that.homeList = res.data.data;
+        });
     }
   }
 };
