@@ -17,8 +17,11 @@
         <p class="p6">{{item.storeAddr}}</p>
         <div class="bottom">
           <a :href="'tel: '+item.storeTel" class="btn">联系门店</a>
-        <a :href="'https://uri.amap.com/marker?position=经度,维度&name='+item.storeName" class="btn">地图导航</a>
-          <span class="btn btncol" @click="choiceclick(item.id)">立即预约</span>
+          <a
+            :href="'https://uri.amap.com/marker?position=经度,维度&name='+item.storeName"
+            class="btn"
+          >地图导航</a>
+          <span class="btn btncol" @click="choiceclick(item.id,item.storeName)">立即预约</span>
         </div>
       </li>
     </ul>
@@ -62,11 +65,18 @@ export default {
         path: "/city"
       });
     },
-    choiceclick(id) {
-      this.$router.push({
-        path: "/choice",
-        query: { id: id }
-      });
+    choiceclick(id, name) {
+      console.log(sessionStorage.getItem("login"));
+      if (sessionStorage.getItem("login") == null) {
+        this.$router.push({
+          path: "/register"
+        });
+      } else {
+        this.$router.push({
+          path: "/choice",
+          query: { id: id }
+        });
+      }
     }
   },
   created() {

@@ -4,16 +4,16 @@
       <p class="p1">拍摄人信息</p>
       <p class="mess">
         <span class="s1">姓名:</span>
-        <input type="text" class="inp" />
+        <input type="text" class="inp" placeholder="吴亦凡"/>
       </p>
       <p class="mess" @click="birthclick">
         <span class="s1">生日:</span>
-        <span class="inp"></span>
+        <span class="inp">1995-03-16</span>
         <img src="@/assets/icon/jump.png" class="jump" />
       </p>
       <p class="mess" @click="sexclick">
         <span class="s1">性别:</span>
-        <span class="inp"></span>
+        <span class="inp">女</span>
         <img src="@/assets/icon/jump.png" class="jump" />
       </p>
     </div>
@@ -36,7 +36,7 @@
         <span class="s2">2019-10-10 17:00</span>
       </p>
       <p class="mess">
-        <span class="s2">预约时间</span>
+        <span class="s2">预约门店</span>
         <span class="s2">长春卓展店</span>
       </p>
     </div>

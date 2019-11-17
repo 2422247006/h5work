@@ -1,53 +1,23 @@
 <template>
   <div class="page">
     <div class="month">
-      <span class="span col">今天10月13日</span>
-      <span class="span">明天10月14日</span>
-      <span class="span">星期日10月15日</span>
-      <span class="span">星期日10月16日</span>
-      <span class="span">星期日10月17日</span>
-      <span class="span">星期日10月18日</span>
-      <span class="span">星期日10月19日</span>
-      <span class="span">其他日期</span>
+      <span
+        class="span"
+        :class="{col:changeactive==index}"
+        v-for="(item,index) in time_data"
+        :key="item.id"
+        @click="choicedate(index,item.format)"
+      >{{item.date}}</span>
     </div>
     <div class="con">
       <div class="am">
-        <p class="p1">上午时段</p>
         <ul class="amlist">
-          <li class="red">10:00</li>
-          <li class="gary">10:00</li>
-          <li>10:00</li>
-          <li>10:00</li>
-          <li>10:00</li>
-          <li>10:00</li>
-          <li>10:00</li>
-          <li>10:00</li>
-        </ul>
-      </div>
-      <div class="am">
-        <p class="p1">下午时段</p>
-        <ul class="amlist">
-          <li>10:00</li>
-          <li>10:00</li>
-          <li>10:00</li>
-          <li>10:00</li>
-          <li>10:00</li>
-          <li>10:00</li>
-          <li>10:00</li>
-          <li>10:00</li>
-        </ul>
-      </div>
-      <div class="am">
-        <p class="p1">晚上时段</p>
-        <ul class="amlist">
-          <li>10:00</li>
-          <li>10:00</li>
-          <li>10:00</li>
-          <li>10:00</li>
-          <li>10:00</li>
-          <li>10:00</li>
-          <li>10:00</li>
-          <li>10:00</li>
+          <li
+            v-for="(item,index) of timelist"
+            :key="item.id"
+            :class="{gary:item.status==false,red:changeactivetime==index}"
+            @click="choicetime(index,item.status)"
+          >{{item.time}}</li>
         </ul>
       </div>
     </div>
@@ -108,25 +78,80 @@
 
 <script>
 import { Popup } from "vant";
+import { Notify } from "vant";
 export default {
-  name: "time",
   components: {
-    [Popup.name]: Popup
+    [Popup.name]: Popup,
+    [Notify.name]: Notify
   },
   data() {
     return {
-      show: false
+      changeactive: 0,
+      changeactivetime: 0,
+      show: false,
+      time_data: [],
+      timelist: [1, 2]
     };
   },
   methods: {
+    choicedate(index, format) {
+      var that = this;
+      that.changeactive = index;
+      that.$axios
+        .get(that.$apiUrl + "/jfxx-0.1/api/v1/schedule/order/query", {
+          params: {
+            date: format
+          }
+        })
+        .then(function(res) {
+          console.log(res.data.data);
+          that.timelist = res.data.data;
+        });
+    },
+    choicetime(index, status) {
+      this.changeactivetime = index;
+      if (status == false) {
+        Notify({
+          message: "当前时段不可选",
+          color: "white",
+          background: "#ccc",
+           duration: 600
+        });
+      }
+    },
     busclick() {
       this.show = true;
     },
-    orderclick(){
+    orderclick() {
       this.$router.push({
         path: "/order"
       });
     }
+  },
+  created() {
+    const temp = [];
+    const onyear = [];
+    var weeklist = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+    for (let i = 0; i < 7; i++) {
+      const time = new Date(new Date().setDate(new Date().getDate() + i));
+      const year = `${time.getFullYear()}`;
+      const month = `0${time.getMonth() + 1}`.slice(-2);
+      const week = `${time.getDay()}`.slice(-2);
+      const weekday = weeklist[week];
+      const strDate = `0${time.getDate()}`.slice(-2);
+      temp.push(`${weekday}${month}月${strDate}日`);
+      onyear.push(`${year}${month}${strDate}`);
+    }
+    console.log(onyear);
+    this.time_data = temp.map(function(item, index) {
+      return { id: index, date: item };
+    });
+
+    this.time_data = this.time_data.map((v, i) => {
+      v.format = onyear[i];
+      return v;
+    });
+    console.log(this.time_data);
   }
 };
 </script>
@@ -155,6 +180,9 @@ export default {
   padding: 0 0.37rem;
   box-sizing: border-box;
 }
+.month::-webkit-scrollbar {
+  display: none;
+}
 .span {
   font-size: 0.32rem;
   font-weight: 400;
@@ -169,6 +197,7 @@ export default {
   line-height: 1rem;
   border-bottom: 0.05rem solid #1769ff;
 }
+
 .con {
   width: 100%;
   padding-top: 1.17rem;
@@ -186,7 +215,7 @@ export default {
   color: #181818;
 }
 .am {
-  margin-top: 0.3rem;
+  margin-top: 0.5rem;
 }
 .amlist {
   width: 100%;
@@ -201,18 +230,19 @@ export default {
 }
 li {
   width: 20%;
-  height: 0.8rem;
+  height: 1rem;
+  line-height: 1rem;
   font-size: 0.4rem;
   font-weight: 400;
-  line-height: 0.8rem;
   color: #16161a;
   text-align: center;
+  margin: 0.2rem 0;
 }
 .red {
-  background: #f0024a;
+  background-image: linear-gradient(90deg, #1769ff, #142894);
   color: white;
   border-radius: 0.11rem;
-  box-shadow: 0 0.11rem 0.19rem -0.08rem #e21955;
+  box-shadow: 0 0.11rem 0.19rem -0.08rem #142894;
 }
 .gary {
   color: #ddd;
@@ -332,5 +362,10 @@ li {
   background-color: #dce9ff;
   border-radius: 0.05rem;
   font-size: 0.32rem;
+}
+</style>
+<style >
+.van-toast {
+  font-size: 0.1rem;
 }
 </style>
