@@ -1,10 +1,10 @@
 <template>
   <div class="page">
     <p class="p1">繁简照相馆</p>
-    <input type="text" placeholder="请输入您的手机号" class="input" />
-    <input type="password" placeholder="请输入验证码" class="yzm" />
-    <span class="get" v-if="btnTitle" :disabled="disabled" @click="validateBtn()">{{btnTitle}}</span>
-    <div class="submit">登录</div>
+    <input type="text" placeholder="请输入您的手机号" class="input" v-model="phone" />
+    <input type="password" placeholder="请输入验证码" class="yzm" v-model="code" />
+    <span class="get" v-if="btnTitle" :disabled="disabled" @click="getyzm()">{{btnTitle}}</span>
+    <div class="submit" @click="login()">登录</div>
   </div>
 </template>
 
@@ -14,7 +14,7 @@ export default {
   data() {
     return {
       phone: "", //手机号
-      verifyCode: "", //验证码
+      code: "", //验证码
       btnTitle: "获取验证码",
       disabled: false, //是否可点击
       errors: {} //验证提示信息
@@ -23,30 +23,47 @@ export default {
   methods: {
     validateBtn() {
       //倒计时
+    },
+    getyzm() {
+      var that = this;
       let time = 60;
       let timer = setInterval(() => {
         if (time == 0) {
           clearInterval(timer);
-          this.disabled = false;
-          this.btnTitle = "获取验证码";
+          that.disabled = false;
+          that.btnTitle = "获取验证码";
         } else {
-          this.btnTitle = time + "秒后重试";
-          this.disabled = true;
+          that.btnTitle = time + "秒后重试";
+          that.disabled = true;
           time--;
         }
       }, 1000);
-    },
-    getyzm(){
-        var that=this
-         that.$axios
+      that.$axios
         .get(that.$apiUrl + "/jfxx-0.1/api/v1/user/login/verifyCode", {
           params: {
-              phone:15044003242
+            phone: 15044003242
           }
         })
         .then(function(res) {
           console.log(res.data.data);
-        //   that.homeList = res.data.data;
+          //   that.homeList = res.data.data;
+        });
+    },
+    login() {
+      var that = this;
+      that.$axios
+        .get(that.$apiUrl + "/jfxx-0.1/api/v1/user/login/customer", {
+          params: {
+            phone: that.phone,
+            verifyCode: that.code
+          }
+        })
+        .then(function(res) {
+          if (res.data.status == "0000") {
+          console.log(res.data.data)
+           localStorage.setItem("userId",res.data.data.id);
+           that.$router.go(-1);//返回上一层
+          }
         });
     }
   }
@@ -84,8 +101,9 @@ export default {
   width: 40%;
   height: 1.5rem;
   border: none;
-  border-bottom: 0.01rem solid rgb(242, 242, 242);
+
   font-size: 0.4rem;
+  color: #142894;
 }
 .submit {
   width: 100%;

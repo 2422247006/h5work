@@ -65,13 +65,13 @@
       <div class="check">
         <p class="p7">产品类型</p>
         <ul class="ul">
-          <li 
-          class="p8" 
-          v-for="(item,index) in showinfo.comboList" 
-          :key="item.id"
-          :class="{p8col:changeactive==index}"
-          @click="choiceclick(index,item.comboName,item.comboPrice)">
-          {{item.comboName}}</li>
+          <li
+            class="p8"
+            v-for="(item,index) in showinfo.comboList"
+            :key="item.id"
+            :class="{p8col:changeactive==index}"
+            @click="choiceclick(index,item.comboName,item.comboPrice)"
+          >{{item.comboName}}</li>
         </ul>
       </div>
       <div class="price">
@@ -97,22 +97,22 @@ export default {
   },
   data() {
     return {
-       changeactive:-1,
+      changeactive: -1,
       show: false,
       tablist: [{ id: 0, name: "产品展示" }, { id: 1, name: "产品内容" }],
       active: "",
-      price:0,
-      choice:''
+      price: 0,
+      choice: ""
     };
   },
   methods: {
     popupclick() {
       this.show = true;
     },
-    choiceclick(index,name,price){
- this.changeactive = index;
- this.choice=name
- this.price=price
+    choiceclick(index, name, price) {
+      this.changeactive = index;
+      this.choice = name;
+      this.price = price;
     },
     timeclick() {
       this.$router.push({
@@ -122,8 +122,8 @@ export default {
   },
   created() {
     this.showinfo = this.$route.query.item;
-    var date=new Date()
-    console.log(date)
+    var date = new Date();
+    console.log(date);
   }
 };
 </script>

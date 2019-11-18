@@ -66,8 +66,8 @@ export default {
       });
     },
     choiceclick(id, name) {
-      console.log(sessionStorage.getItem("login"));
-      if (sessionStorage.getItem("login") == null) {
+      // console.log(localStorage.getItem("userId"));
+      if (localStorage.getItem("userId") == null) {
         this.$router.push({
           path: "/register"
         });
@@ -77,20 +77,39 @@ export default {
           query: { id: id }
         });
       }
+    },
+    getQueryVariable(variable) {
+      var query = window.location.search.substring(1);
+      console.log(query);
+      var vars = query.split("&");
+      for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split("=");
+        if (pair[0] == variable) {
+          return pair[1];
+        }
+      }
+      return false;
     }
   },
   created() {
+    console.log(localStorage.getItem("code"))
+    if(localStorage.getItem("code")==null){
+ window.location.href =
+      "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5e0a44419005b7f5&redirect_uri=http%3A%2F%2Fwww.hfqhj.cn%2Fjfxx&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+
+    }
+   
     this.getinfohome();
   },
   mounted() {
-    // this.getinfohome();
-    if (this.$route.query.name && this.$route.query.id) {
-      this.cityname = this.$route.query.name;
-      this.cityid = this.$route.query.id;
-    }
+    // if (this.$route.query.name && this.$route.query.id) {
+    //   this.cityname = this.$route.query.name;
+    //   this.cityid = this.$route.query.id;
+    // }
 
-    console.log(this.cityname);
-    console.log(this.cityid);
+    var code = this.getQueryVariable("code");
+    console.log(code);
+    localStorage.setItem("code", code);
   }
 };
 </script>

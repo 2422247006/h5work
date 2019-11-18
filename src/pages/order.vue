@@ -4,7 +4,7 @@
       <p class="p1">拍摄人信息</p>
       <p class="mess">
         <span class="s1">姓名:</span>
-        <input type="text" class="inp" placeholder="吴亦凡"/>
+        <input type="text" class="inp" placeholder="吴亦凡" />
       </p>
       <p class="mess" @click="birthclick">
         <span class="s1">生日:</span>
@@ -51,7 +51,7 @@
         合计
         <span class="p10">￥229.00</span>
       </p>
-      <p class="p11" @click="payclick">去支付</p>
+      <p class="p11" @click="payclick()">去支付</p>
     </div>
     <van-popup
       v-model="birth"
@@ -89,7 +89,7 @@ export default {
       radio: 1,
       birth: false,
       sex: false,
-      minDate:'',
+      minDate: "",
       currentDate: new Date(),
       columns: ["男", "女"]
     };
@@ -107,48 +107,76 @@ export default {
     onCancel() {
       Toast("取消");
     },
-   payclick() {
-      if (typeof WeixinJSBridge == "undefined") {
-        if (document.addEventListener) {
-          document.addEventListener(
-            "WeixinJSBridgeReady",
-            this.onBridgeReady,
-            false
-          );
-        } else if (document.attachEvent) {
-          document.attachEvent("WeixinJSBridgeReady", this.onBridgeReady);
-          document.attachEvent("onWeixinJSBridgeReady", this.onBridgeReady);
-        }
-      } else {
-        this.onBridgeReady();
-      }
-    },
-    //调用微信支付
-    onBridgeReady() {
-      var pay_data = {
-        appId: '',
-        timeStamp:'',
-        nonceStr: '',
-        package: '',
-        signType: '',
-        paySign: ''
-      };
-      console.log(pay_data);
-      var self = this;
-      WeixinJSBridge.invoke("getBrandWCPayRequest", pay_data, function(res) {
-        if (res.err_msg == "get_brand_wcpay_request:ok") {
+    payclick() {
+     
+      
 
-        } else if (res.err_msg == "get_brand_wcpay_request:cancel") {
-          self.$vux.toast.text("取消支付");
-        } else {
-          self.$vux.toast.text(res.err_msg);
-        }
-      });
-    },
+      //       if (typeof WeixinJSBridge == "undefined") {
+      //         if (document.addEventListener) {
+      //           document.addEventListener(
+      //             "WeixinJSBridgeReady",
+      //             this.onBridgeReady,
+      //             false
+      //           );
+      //         } else if (document.attachEvent) {
+      //           document.attachEvent("WeixinJSBridgeReady", this.onBridgeReady);
+      //           document.attachEvent("onWeixinJSBridgeReady", this.onBridgeReady);
+      //         }
+      //       } else {
+      //         this.onBridgeReady();
+      //       }
+      // var that = this;
+      // that.$axios
+      //   .get(
+      //     "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5e0a44419005b7f5&redirect_uri=http%3A%2F%2Fwww.hfqhj.cn%2Fjfxx&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect",
+      //     {
+      //       params: {}
+      //     }
+      //   )
+      //   .then(function(res) {
+      //     console.log(res);
+      //     if (res.data.status == "0000") {
+      //     console.log(res.data.data)
+      //      localStorage.setItem("userId",res.data.data.id);
+      //      that.$router.go(-1);//返回上一层
+      //     }
+      //   });
+    }, //调用微信支付
+    onBridgeReady() {
+      var pay_data = {
+        appId: "",
+        timeStamp: "",
+        nonceStr: "",
+        package: "",
+        signType: "",
+        paySign: ""
+      };
+      console.log(pay_data);
+      var self = this;
+      WeixinJSBridge.invoke("getBrandWCPayRequest", pay_data, function(res) {
+        if (res.err_msg == "get_brand_wcpay_request:ok") {
+        } else if (res.err_msg == "get_brand_wcpay_request:cancel") {
+          self.$vux.toast.text("取消支付");
+        } else {
+          self.$vux.toast.text(res.err_msg);
+        }
+      });
+    },
+    // getQueryString(name) {
+    //     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    //     var r = window.location.search.substr(1).match(reg);
+    //     if (r != null) return unescape(r[2]);
+    //     return null;
+    //   }
+  },
+  created() {
+    //  window.location.href =
+    //     "";
   },
   mounted() {
-    
-  }
+    //  var code = getQueryString("code");
+    //   console.log(code);
+  },
 };
 </script>
 
