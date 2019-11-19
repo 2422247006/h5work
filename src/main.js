@@ -5,8 +5,11 @@ import router from './router'
 import AMap from 'vue-amap';
 import axios from "axios";
 Vue.use(AMap);
+import Vconsole from 'vconsole'
+let vConsole = new Vconsole()
+Vue.use(vConsole)
 
-const apiUrl = "http://106.12.5.191:8080";
+const apiUrl = "https://106.12.5.191/jfxx-server-0.1";
 axios.defaults.withCredentials=true
 Vue.prototype.$axios = axios;
 Vue.prototype.$apiUrl = apiUrl;

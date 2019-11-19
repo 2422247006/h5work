@@ -99,7 +99,7 @@ export default {
        localStorage.setItem("orderDate", format);
       that.changeactive = index;
       that.$axios
-        .get(that.$apiUrl + "/jfxx-0.1/api/v1/schedule/order/query", {
+        .get(that.$apiUrl + "/api/v1/schedule/order/query", {
           params: {
             date: format
           }
@@ -171,7 +171,7 @@ export default {
     console.log(this.time_data);
     var that = this;
     that.$axios
-      .get(that.$apiUrl + "/jfxx-0.1/api/v1/schedule/order/query", {
+      .get(that.$apiUrl + "/api/v1/schedule/order/query", {
         params: {
           date: that.time_data[0].format
         }

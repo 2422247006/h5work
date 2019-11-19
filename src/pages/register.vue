@@ -43,7 +43,7 @@ export default {
         }
       }, 1000);
       that.$axios
-        .get(that.$apiUrl + "/jfxx-0.1/api/v1/user/login/verifyCode", {
+        .get(that.$apiUrl + "/api/v1/user/login/verifyCode", {
           params: {
             phone: that.phone
           }
@@ -56,7 +56,7 @@ export default {
     login() {
       var that = this;
       that.$axios
-        .get(that.$apiUrl + "/jfxx-0.1/api/v1/user/login/customer", {
+        .get(that.$apiUrl + "/api/v1/user/login/customer", {
           params: {
             phone: that.phone,
             verifyCode: that.code

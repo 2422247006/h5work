@@ -100,7 +100,7 @@ export default {
       comboId: "",
       productImg: "",
       code: "",
-      zfdata:{}
+     
     };
   },
   methods: {
@@ -117,7 +117,7 @@ export default {
     payclick() {
       var that = this;
       that.$axios
-        .post(that.$apiUrl + "/jfxx-0.1/api/v1/order/create", {
+        .post(that.$apiUrl + "/api/v1/order/create", {
           comboId: that.comboId,
           custName: that.custName,
           custPhone: that.custPhone,
@@ -132,36 +132,28 @@ export default {
           userId: that.userId
         })
         .then(function(res) {
-          console.log(res.data.data);
-          that.zfdata=res.data.data
+          const zfdata = res.data.data
+          if (typeof WeixinJSBridge == "undefined"){
+                        if( document.addEventListener ){
+                            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+                        }else if (document.attachEvent){
+                            document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+                            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+                        }
+                        }else{
+                        that.onBridgeReady(zfdata);
+                    }
         });
-      if (typeof WeixinJSBridge == "undefined") {
-        if (document.addEventListener) {
-          document.addEventListener(
-            "WeixinJSBridgeReady",
-            this.onBridgeReady,
-            false
-          );
-        } else if (document.attachEvent) {
-          document.attachEvent("WeixinJSBridgeReady", this.onBridgeReady);
-          document.attachEvent("onWeixinJSBridgeReady", this.onBridgeReady);
-        }
-      } else {
-        this.onBridgeReady();
-      }
+      
     },
     //调用微信支付
-    onBridgeReady() {
-      var pay_data = that.zfdata
+    onBridgeReady(zfdata) {
+      var pay_data = zfdata
       console.log(pay_data);
-      var self = this;
       WeixinJSBridge.invoke("getBrandWCPayRequest", pay_data, function(res) {
-        if (res.err_msg == "get_brand_wcpay_request:ok") {
-        } else if (res.err_msg == "get_brand_wcpay_request:cancel") {
-          self.$vux.toast.text("取消支付");
-        } else {
-          self.$vux.toast.text(res.err_msg);
-        }
+       if(res.err_msg == "get_brand_wcpay_request:ok" ){
+                    alert('支付成功！')
+                    }
       });
     }
   },
@@ -176,7 +168,6 @@ export default {
     this.orderAmount = localStorage.getItem("orderAmount");
     this.orderDate = localStorage.getItem("orderDate");
     this.orderTime = localStorage.getItem("orderTime");
-    this.productImg = localStorage.getItem("productImg");
     this.productImg = localStorage.getItem("productImg");
     this.code = localStorage.getItem("code");
   },

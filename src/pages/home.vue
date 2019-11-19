@@ -1,8 +1,8 @@
 <template>
   <div class="page">
     <div class="place">
-      <span class="p1">当前城市:</span>
-      <span class="p2">{{cityname}}</span>
+      <span class="p1" @click="clear111()">当前城市:</span>
+      <span class="p2" >{{cityname}}</span>
       <div class="p3wrap" @click="cityclick">
         <span class="p3">切换城市</span>
         <img src="@/assets/icon/jump.png" class="jump" />
@@ -51,10 +51,26 @@ export default {
     }
   },
   methods: {
+    clear111(){
+      alert(123)
+    localStorage.removeItem('userId');
+    localStorage.removeItem('storeId');
+    localStorage.removeItem('storeName');
+    localStorage.removeItem('productId');
+    localStorage.removeItem('productName');
+    localStorage.removeItem('comboId');
+    localStorage.removeItem('comboName');
+    localStorage.removeItem('orderAmount');
+    localStorage.removeItem('orderDate');
+    localStorage.removeItem('orderTime');
+    localStorage.removeItem('productImg');
+    localStorage.removeItem('token');
+    localStorage.removeItem('code');
+    },
     getinfohome() {
       var that = this;
       that.$axios
-        .get(that.$apiUrl + "/jfxx-0.1/api/v1/store/list/" + that.cityid, {
+        .get(that.$apiUrl + "/api/v1/store/list/" + that.cityid, {
           params: {}
         })
         .then(function(res) {
@@ -114,11 +130,11 @@ export default {
     }
   },
   created() {
-    console.log(localStorage.getItem("code"));
-    if (localStorage.getItem("code") == null) {
-      window.location.href =
-        "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5e0a44419005b7f5&redirect_uri=http%3A%2F%2Fwww.hfqhj.cn%2Fjfxx&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
-    }
+    // console.log(localStorage.getItem("code"));
+    // if (localStorage.getItem("code") == null) {
+    //   window.location.href =
+    //     "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5e0a44419005b7f5&redirect_uri=http%3A%2F%2Fwww.hfqhj.cn%2Fjfxx&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+    // }
 
     this.getinfohome();
   },
@@ -128,9 +144,9 @@ export default {
       this.cityid = this.$route.query.id;
     }
 
-    var code = this.getQueryVariable("code");
-    console.log(code);
-    localStorage.setItem("code", code);
+    // var code = this.getQueryVariable("code");
+    // console.log(code);
+    // localStorage.setItem("code", code);
     this.city();
    
   }

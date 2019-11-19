@@ -89,7 +89,7 @@ export default {
     getinfocity(){
      var that=this;
       that.$axios
-        .get(that.$apiUrl+"/jfxx-0.1/api/v1/store/city", {
+        .get(that.$apiUrl+"/api/v1/store/city", {
           params: {}
         })
         .then(function(res) {
