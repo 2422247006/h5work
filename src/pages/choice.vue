@@ -53,6 +53,11 @@ export default {
         })
     },
     showclick(item) {
+      console.log(item)
+      localStorage.setItem("productId", item.id);
+       localStorage.setItem("productName", item.name);
+        localStorage.setItem("productImg", item.indexImg);
+       
       this.$router.push({
         path: "/show",
          query: { item: item }

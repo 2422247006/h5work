@@ -4,40 +4,43 @@
       <p class="p1">拍摄人信息</p>
       <p class="mess">
         <span class="s1">姓名:</span>
-        <input type="text" class="inp" placeholder="吴亦凡" />
-      </p>
-      <p class="mess" @click="birthclick">
-        <span class="s1">生日:</span>
-        <span class="inp">1995-03-16</span>
-        <img src="@/assets/icon/jump.png" class="jump" />
+        <input type="text" class="inp" v-model="custName" placeholder="请填写姓名" />
       </p>
       <p class="mess" @click="sexclick">
         <span class="s1">性别:</span>
-        <span class="inp">女</span>
+        <span class="inp">{{sex_}}</span>
         <img src="@/assets/icon/jump.png" class="jump" />
+      </p>
+      <p class="mess">
+        <span class="s1">手机号码:</span>
+        <input type="text" class="inp" v-model="custPhone" placeholder="请填写手机号码" />
+      </p>
+      <p class="mess">
+        <span class="s1">备注:</span>
+        <input type="text" class="inp" v-model="remark" placeholder="请填写手机号码" />
       </p>
     </div>
     <div class="info">
       <p class="p1">已选产品</p>
       <div class="infocon">
         <div class="proimg">
-          <img src="@/assets/image/time2.jpg" style="width:100%;height:100%;" />
+          <img :src="productImg" style="width:100%;height:100%;" />
         </div>
         <div class="txt">
-          <p class="p3">证件照套餐专区</p>
-          <p class="p2">证件照三底色套餐</p>
+          <p class="p3">{{productName}}</p>
+          <p class="p2">{{comboName}}</p>
         </div>
-        <p class="p4">￥229</p>
+        <p class="p4">￥{{orderAmount}}</p>
       </div>
     </div>
     <div class="info">
       <p class="mess">
         <span class="s2">到店时间</span>
-        <span class="s2">2019-10-10 17:00</span>
+        <span class="s2">{{orderDate}}{{orderTime}}</span>
       </p>
       <p class="mess">
         <span class="s2">预约门店</span>
-        <span class="s2">长春卓展店</span>
+        <span class="s2">{{storeName}}</span>
       </p>
     </div>
     <div class="info">
@@ -49,18 +52,11 @@
     <div class="price">
       <p class="p9">
         合计
-        <span class="p10">￥229.00</span>
+        <span class="p10">￥{{orderAmount}}</span>
       </p>
       <p class="p11" @click="payclick()">去支付</p>
     </div>
-    <van-popup
-      v-model="birth"
-      round
-      position="bottom"
-      :style="{ height: '40%',padding:'0.37rem',boxSizing:'border-box'}"
-    >
-      <van-datetime-picker v-model="currentDate" type="date" :min-date="minDate" />
-    </van-popup>
+
     <van-popup
       v-model="sex"
       round
@@ -86,71 +82,77 @@ export default {
   },
   data() {
     return {
-      radio: 1,
-      birth: false,
+      remark: "",
+      custName: "",
+      custPhone: "",
+      sex_: "",
       sex: false,
-      minDate: "",
-      currentDate: new Date(),
-      columns: ["男", "女"]
+      columns: ["男", "女"],
+      storeName: "",
+      productName: "",
+      comboName: "",
+      orderAmount: "",
+      orderDate: "",
+      orderTime: "",
+      userId: "",
+      storeId: "",
+      productId: "",
+      comboId: "",
+      productImg: "",
+      code: "",
+      zfdata:{}
     };
   },
   methods: {
-    birthclick() {
-      this.birth = true;
-    },
     sexclick() {
       this.sex = true;
     },
     onConfirm(value, index) {
-      Toast(`当前值：${value}, 当前索引：${index}`);
+      this.sex_ = value;
+      this.sex = false;
     },
     onCancel() {
-      Toast("取消");
+      this.sex = false;
     },
     payclick() {
-     
-      
-
-      //       if (typeof WeixinJSBridge == "undefined") {
-      //         if (document.addEventListener) {
-      //           document.addEventListener(
-      //             "WeixinJSBridgeReady",
-      //             this.onBridgeReady,
-      //             false
-      //           );
-      //         } else if (document.attachEvent) {
-      //           document.attachEvent("WeixinJSBridgeReady", this.onBridgeReady);
-      //           document.attachEvent("onWeixinJSBridgeReady", this.onBridgeReady);
-      //         }
-      //       } else {
-      //         this.onBridgeReady();
-      //       }
-      // var that = this;
-      // that.$axios
-      //   .get(
-      //     "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5e0a44419005b7f5&redirect_uri=http%3A%2F%2Fwww.hfqhj.cn%2Fjfxx&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect",
-      //     {
-      //       params: {}
-      //     }
-      //   )
-      //   .then(function(res) {
-      //     console.log(res);
-      //     if (res.data.status == "0000") {
-      //     console.log(res.data.data)
-      //      localStorage.setItem("userId",res.data.data.id);
-      //      that.$router.go(-1);//返回上一层
-      //     }
-      //   });
-    }, //调用微信支付
+      var that = this;
+      that.$axios
+        .post(that.$apiUrl + "/jfxx-0.1/api/v1/order/create", {
+          comboId: that.comboId,
+          custName: that.custName,
+          custPhone: that.custPhone,
+          orderAmount: that.orderAmount,
+          orderDate: that.orderDate,
+          orderTime: that.orderTime,
+          payType: "WEI_XIN",
+          productId: that.productId,
+          remark: that.remark,
+          storeId: that.storeId,
+          userCode: that.code,
+          userId: that.userId
+        })
+        .then(function(res) {
+          console.log(res.data.data);
+          that.zfdata=res.data.data
+        });
+      if (typeof WeixinJSBridge == "undefined") {
+        if (document.addEventListener) {
+          document.addEventListener(
+            "WeixinJSBridgeReady",
+            this.onBridgeReady,
+            false
+          );
+        } else if (document.attachEvent) {
+          document.attachEvent("WeixinJSBridgeReady", this.onBridgeReady);
+          document.attachEvent("onWeixinJSBridgeReady", this.onBridgeReady);
+        }
+      } else {
+        this.onBridgeReady();
+      }
+    },
+    //调用微信支付
     onBridgeReady() {
-      var pay_data = {
-        appId: "",
-        timeStamp: "",
-        nonceStr: "",
-        package: "",
-        signType: "",
-        paySign: ""
-      };
+      var pay_data = that.zfdata
       console.log(pay_data);
       var self = this;
       WeixinJSBridge.invoke("getBrandWCPayRequest", pay_data, function(res) {
@@ -161,22 +163,24 @@ export default {
           self.$vux.toast.text(res.err_msg);
         }
       });
-    },
-    // getQueryString(name) {
-    //     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-    //     var r = window.location.search.substr(1).match(reg);
-    //     if (r != null) return unescape(r[2]);
-    //     return null;
-    //   }
+    }
   },
   created() {
-    //  window.location.href =
-    //     "";
+    this.userId = localStorage.getItem("userId");
+    this.storeId = localStorage.getItem("storeId");
+    this.storeName = localStorage.getItem("storeName");
+    this.productId = localStorage.getItem("productId");
+    this.productName = localStorage.getItem("productName");
+    this.comboId = localStorage.getItem("comboId");
+    this.comboName = localStorage.getItem("comboName");
+    this.orderAmount = localStorage.getItem("orderAmount");
+    this.orderDate = localStorage.getItem("orderDate");
+    this.orderTime = localStorage.getItem("orderTime");
+    this.productImg = localStorage.getItem("productImg");
+    this.productImg = localStorage.getItem("productImg");
+    this.code = localStorage.getItem("code");
   },
-  mounted() {
-    //  var code = getQueryString("code");
-    //   console.log(code);
-  },
+  mounted() {}
 };
 </script>
 
@@ -216,11 +220,15 @@ export default {
   height: 100%;
   font-size: 0.4rem;
   border: none;
+  color: #666;
+
+  display: flex;
+  align-items: center;
 }
 .s1 {
   font-size: 0.4rem;
   color: #45454d;
-  width: 20%;
+  width: 30%;
 }
 .s2 {
   font-size: 0.4rem;

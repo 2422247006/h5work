@@ -30,10 +30,12 @@
 
 <script>
 import { Popup } from "vant";
+// import BMap from "BMap";
 export default {
   name: "home",
   data() {
     return {
+       LocationCity:"正在定位",
       show: false,
       cityname: "上海",
       homeList: [],
@@ -67,11 +69,14 @@ export default {
     },
     choiceclick(id, name) {
       // console.log(localStorage.getItem("userId"));
+
       if (localStorage.getItem("userId") == null) {
         this.$router.push({
           path: "/register"
         });
       } else {
+        localStorage.setItem("storeId", id);
+        localStorage.setItem("storeName", name);
         this.$router.push({
           path: "/choice",
           query: { id: id }
@@ -89,27 +94,45 @@ export default {
         }
       }
       return false;
+    },
+    city() {
+      //定义获取城市方法
+      const geolocation = new BMap.Geolocation();
+      var _this = this;
+      geolocation.getCurrentPosition(
+        function getinfo(position) {
+          let city = position.address.city; //获取城市信息
+          let province = position.address.province; //获取省份信息
+          _this.LocationCity = city;
+           console.log(_this.LocationCity)
+        },
+        function(e) {
+          _this.LocationCity = "定位失败";
+        },
+        { provider: "baidu" }
+      );
     }
   },
   created() {
-    console.log(localStorage.getItem("code"))
-    if(localStorage.getItem("code")==null){
- window.location.href =
-      "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5e0a44419005b7f5&redirect_uri=http%3A%2F%2Fwww.hfqhj.cn%2Fjfxx&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
-
+    console.log(localStorage.getItem("code"));
+    if (localStorage.getItem("code") == null) {
+      window.location.href =
+        "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5e0a44419005b7f5&redirect_uri=http%3A%2F%2Fwww.hfqhj.cn%2Fjfxx&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
     }
-   
+
     this.getinfohome();
   },
   mounted() {
-    // if (this.$route.query.name && this.$route.query.id) {
-    //   this.cityname = this.$route.query.name;
-    //   this.cityid = this.$route.query.id;
-    // }
+    if (this.$route.query.name && this.$route.query.id) {
+      this.cityname = this.$route.query.name;
+      this.cityid = this.$route.query.id;
+    }
 
     var code = this.getQueryVariable("code");
     console.log(code);
     localStorage.setItem("code", code);
+    this.city();
+   
   }
 };
 </script>

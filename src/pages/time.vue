@@ -16,23 +16,23 @@
             v-for="(item,index) of timelist"
             :key="item.id"
             :class="{gary:item.status==false,red:changeactivetime==index}"
-            @click="choicetime(index,item.status)"
+            @click="choicetime(index,item.status,item.time)"
           >{{item.time}}</li>
         </ul>
       </div>
     </div>
     <div class="footer">
-      <div style="t">
+      <!-- <div style="t">
         <div class="top" @click="busclick">
           <img src="@/assets/icon/wz.png" class="icon" />
           <p class="p2">长春卓展店</p>
           <img src="@/assets/icon/jump.png" class="icon" />
         </div>
       </div>
-      <p class="p3">若无合适时间可切换门店看看哦~</p>
+      <p class="p3">若无合适时间可切换门店看看哦~</p>-->
       <p class="submit" @click="orderclick">确定</p>
     </div>
-    <van-popup
+    <!-- <van-popup
       v-model="show"
       round
       position="bottom"
@@ -72,7 +72,7 @@
           <img src="@/assets/icon/tel.png" class="tel" />
         </a>
       </div>
-    </van-popup>
+    </van-popup>-->
   </div>
 </template>
 
@@ -87,7 +87,7 @@ export default {
   data() {
     return {
       changeactive: 0,
-      changeactivetime: 0,
+      changeactivetime: -1,
       show: false,
       time_data: [],
       timelist: [1, 2]
@@ -96,6 +96,7 @@ export default {
   methods: {
     choicedate(index, format) {
       var that = this;
+       localStorage.setItem("orderDate", format);
       that.changeactive = index;
       that.$axios
         .get(that.$apiUrl + "/jfxx-0.1/api/v1/schedule/order/query", {
@@ -108,24 +109,40 @@ export default {
           that.timelist = res.data.data;
         });
     },
-    choicetime(index, status) {
-      this.changeactivetime = index;
+    choicetime(index, status,time) {
       if (status == false) {
         Notify({
           message: "当前时段不可选",
           color: "white",
           background: "#ccc",
-           duration: 600
+          duration: 600
         });
+      } else {
+          localStorage.setItem("orderTime", time);
+        this.changeactivetime = index;
       }
     },
     busclick() {
       this.show = true;
     },
     orderclick() {
-      this.$router.push({
-        path: "/order"
-      });
+      if (this.changeactivetime == -1) {
+     
+        Notify({
+          message: "请选择预约时间",
+          color: "white",
+          background: "#ccc",
+          duration: 600
+        });
+      } else {
+        this.$router.push({
+          path: "/order"
+        });
+      }
+        //     this.$router.push({
+        //   path: "/order"
+        // });
+      
     }
   },
   created() {
@@ -152,6 +169,17 @@ export default {
       return v;
     });
     console.log(this.time_data);
+    var that = this;
+    that.$axios
+      .get(that.$apiUrl + "/jfxx-0.1/api/v1/schedule/order/query", {
+        params: {
+          date: that.time_data[0].format
+        }
+      })
+      .then(function(res) {
+        console.log(res.data.data);
+        that.timelist = res.data.data;
+      });
   }
 };
 </script>

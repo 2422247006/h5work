@@ -70,7 +70,7 @@
             v-for="(item,index) in showinfo.comboList"
             :key="item.id"
             :class="{p8col:changeactive==index}"
-            @click="choiceclick(index,item.comboName,item.comboPrice)"
+            @click="choiceclick(index,item.comboName,item.comboPrice,item.id)"
           >{{item.comboName}}</li>
         </ul>
       </div>
@@ -88,12 +88,14 @@
 <script>
 import { Popup } from "vant";
 import { Tab, Tabs } from "vant";
+import { Notify } from "vant";
 export default {
   name: "city",
   components: {
     [Popup.name]: Popup,
     [Tab.name]: Tab,
-    [Tabs.name]: Tabs
+    [Tabs.name]: Tabs,
+    [Notify.name]: Notify
   },
   data() {
     return {
@@ -109,15 +111,27 @@ export default {
     popupclick() {
       this.show = true;
     },
-    choiceclick(index, name, price) {
+    choiceclick(index, name, price, id) {
       this.changeactive = index;
       this.choice = name;
       this.price = price;
+      localStorage.setItem("comboId", id);
+      localStorage.setItem("comboName", name);
+      localStorage.setItem("orderAmount", price);
     },
     timeclick() {
-      this.$router.push({
-        path: "/time"
-      });
+      if (this.changeactive == -1) {
+        Notify({
+          message: "请选择套餐",
+          color: "white",
+          background: "#666",
+          duration: 800
+        });
+      } else {
+        this.$router.push({
+          path: "/time"
+        });
+      }
     }
   },
   created() {

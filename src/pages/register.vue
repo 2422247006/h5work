@@ -1,16 +1,20 @@
 <template>
   <div class="page">
-    <p class="p1">繁简照相馆</p>
+    <p class="p1">繁减肖像馆</p>
     <input type="text" placeholder="请输入您的手机号" class="input" v-model="phone" />
-    <input type="password" placeholder="请输入验证码" class="yzm" v-model="code" />
+    <input type="text" placeholder="请输入验证码" class="yzm" v-model="code" />
     <span class="get" v-if="btnTitle" :disabled="disabled" @click="getyzm()">{{btnTitle}}</span>
     <div class="submit" @click="login()">登录</div>
   </div>
 </template>
 
 <script>
+import { Notify } from "vant";
 export default {
   name: "register",
+  components: {
+    [Notify.name]: Notify
+  },
   data() {
     return {
       phone: "", //手机号
@@ -41,12 +45,12 @@ export default {
       that.$axios
         .get(that.$apiUrl + "/jfxx-0.1/api/v1/user/login/verifyCode", {
           params: {
-            phone: 15044003242
+            phone: that.phone
           }
         })
         .then(function(res) {
           console.log(res.data.data);
-          //   that.homeList = res.data.data;
+         
         });
     },
     login() {
@@ -63,6 +67,14 @@ export default {
           console.log(res.data.data)
            localStorage.setItem("userId",res.data.data.id);
            that.$router.go(-1);//返回上一层
+          }else{
+           
+             Notify({
+          message: "验证码错误",
+          color: "white",
+          background: "#ccc",
+           duration: 600
+        });
           }
         });
     }
