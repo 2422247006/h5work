@@ -115,35 +115,35 @@ export default {
       this.sex = false;
     },
     payclick() {
-      var that = this;
-      that.$axios
-        .post(that.$apiUrl + "/api/v1/order/create", {
-          comboId: that.comboId,
-          custName: that.custName,
-          custPhone: that.custPhone,
-          orderAmount: that.orderAmount,
-          orderDate: that.orderDate,
-          orderTime: that.orderTime,
-          payType: "WEI_XIN",
-          productId: that.productId,
-          remark: that.remark,
-          storeId: that.storeId,
-          userCode: that.code,
-          userId: that.userId
-        })
-        .then(function(res) {
-          const zfdata = res.data.data
-          if (typeof WeixinJSBridge == "undefined"){
-                        if( document.addEventListener ){
-                            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
-                        }else if (document.attachEvent){
-                            document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
-                            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
-                        }
-                        }else{
-                        that.onBridgeReady(zfdata);
-                    }
-        });
+      // var that = this;
+      // that.$axios
+      //   .post(that.$apiUrl + "/api/v1/order/create", {
+      //     comboId: that.comboId,
+      //     custName: that.custName,
+      //     custPhone: that.custPhone,
+      //     orderAmount: that.orderAmount,
+      //     orderDate: that.orderDate,
+      //     orderTime: that.orderTime,
+      //     payType: "WEI_XIN",
+      //     productId: that.productId,
+      //     remark: that.remark,
+      //     storeId: that.storeId,
+      //     userCode: that.code,
+      //     userId: that.userId
+      //   })
+      //   .then(function(res) {
+      //     const zfdata = res.data.data
+      //     if (typeof WeixinJSBridge == "undefined"){
+      //                   if( document.addEventListener ){
+      //                       document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+      //                   }else if (document.attachEvent){
+      //                       document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+      //                       document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+      //                   }
+      //                   }else{
+      //                   that.onBridgeReady(zfdata);
+      //               }
+      //   });
       
     },
     //调用微信支付

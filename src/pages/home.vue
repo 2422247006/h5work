@@ -2,7 +2,7 @@
   <div class="page">
     <div class="place">
       <span class="p1" @click="clear111()">当前城市:</span>
-      <span class="p2" >{{cityname}}</span>
+      <span class="p2">{{cityname}}</span>
       <div class="p3wrap" @click="cityclick">
         <span class="p3">切换城市</span>
         <img src="@/assets/icon/jump.png" class="jump" />
@@ -31,14 +31,45 @@
 <script>
 import { Popup } from "vant";
 // import BMap from "BMap";
+import img1 from '../assets/image/1136.jpg'
+import img2 from '../assets/image/1152.jpg'
+import img3 from '../assets/image/1153.jpg'
 export default {
   name: "home",
   data() {
     return {
-       LocationCity:"正在定位",
+      LocationCity: "正在定位",
       show: false,
       cityname: "上海",
-      homeList: [],
+      homeList: [
+        {
+          id: 1,
+          storeName: "繁减肖像（普陀店）",
+          storeAddr: "上海市普陀区武宁路101号我格广场4F-11",
+          storeTel: "021-6125016",
+          storeImg:img1,
+          latitude: null,
+          longitude: null
+        },
+        {
+          id: 2,
+          storeName: "繁减肖像（朝阳店）",
+          storeAddr: "上海市朝阳区武宁路101号3F-11",
+          storeTel: "021-6125016",
+          storeImg: img2,
+          latitude: null,
+          longitude: null
+        },
+        {
+          id: 3,
+          storeName: "繁减肖像（高新店）",
+          storeAddr: "上海市高新区武宁路22号",
+          storeTel: "021-6125016",
+          storeImg: img3,
+          latitude: null,
+          longitude: null
+        }
+      ],
       cityid: 21
     };
   },
@@ -46,88 +77,92 @@ export default {
     [Popup.name]: Popup
   },
   watch: {
-    cityid() {
-      this.getinfohome();
-    }
+    // cityid() {
+    //   this.getinfohome();
+    // }
   },
   methods: {
-    clear111(){
-      alert(123)
-    localStorage.removeItem('userId');
-    localStorage.removeItem('storeId');
-    localStorage.removeItem('storeName');
-    localStorage.removeItem('productId');
-    localStorage.removeItem('productName');
-    localStorage.removeItem('comboId');
-    localStorage.removeItem('comboName');
-    localStorage.removeItem('orderAmount');
-    localStorage.removeItem('orderDate');
-    localStorage.removeItem('orderTime');
-    localStorage.removeItem('productImg');
-    localStorage.removeItem('token');
-    localStorage.removeItem('code');
+    clear111() {
+      alert(123);
+      // localStorage.removeItem("userId");
+      // localStorage.removeItem("storeId");
+      // localStorage.removeItem("storeName");
+      // localStorage.removeItem("productId");
+      // localStorage.removeItem("productName");
+      // localStorage.removeItem("comboId");
+      // localStorage.removeItem("comboName");
+      // localStorage.removeItem("orderAmount");
+      // localStorage.removeItem("orderDate");
+      // localStorage.removeItem("orderTime");
+      // localStorage.removeItem("productImg");
+      // localStorage.removeItem("token");
+      // localStorage.removeItem("code");
     },
-    getinfohome() {
-      var that = this;
-      that.$axios
-        .get(that.$apiUrl + "/api/v1/store/list/" + that.cityid, {
-          params: {}
-        })
-        .then(function(res) {
-          // console.log(res.data.data);
-          that.homeList = res.data.data;
-        });
-    },
+    // getinfohome() {
+    //   var that = this;
+    //   that.$axios
+    //     .get(that.$apiUrl + "/api/v1/store/list/" + that.cityid, {
+    //       params: {}
+    //     })
+    //     .then(function(res) {
+    //       // console.log(res.data.data);
+    //       that.homeList = res.data.data;
+    //     });
+    // },
     cityclick() {
       this.$router.push({
         path: "/city"
       });
     },
     choiceclick(id, name) {
+      this.$router.push({
+        path: "/choice",
+        query: { id: id }
+      });
       // console.log(localStorage.getItem("userId"));
 
-      if (localStorage.getItem("userId") == null) {
-        this.$router.push({
-          path: "/register"
-        });
-      } else {
-        localStorage.setItem("storeId", id);
-        localStorage.setItem("storeName", name);
-        this.$router.push({
-          path: "/choice",
-          query: { id: id }
-        });
-      }
+      // if (localStorage.getItem("userId") == null) {
+      //   this.$router.push({
+      //     path: "/register"
+      //   });
+      // } else {
+      //   localStorage.setItem("storeId", id);
+      //   localStorage.setItem("storeName", name);
+      //   this.$router.push({
+      //     path: "/choice",
+      //     query: { id: id }
+      //   });
+      // }
     },
-    getQueryVariable(variable) {
-      var query = window.location.search.substring(1);
-      console.log(query);
-      var vars = query.split("&");
-      for (var i = 0; i < vars.length; i++) {
-        var pair = vars[i].split("=");
-        if (pair[0] == variable) {
-          return pair[1];
-        }
-      }
-      return false;
-    },
-    city() {
+    // getQueryVariable(variable) {
+    //   var query = window.location.search.substring(1);
+    //   console.log(query);
+    //   var vars = query.split("&");
+    //   for (var i = 0; i < vars.length; i++) {
+    //     var pair = vars[i].split("=");
+    //     if (pair[0] == variable) {
+    //       return pair[1];
+    //     }
+    //   }
+    //   return false;
+    // },
+    // city() {
       //定义获取城市方法
-      const geolocation = new BMap.Geolocation();
-      var _this = this;
-      geolocation.getCurrentPosition(
-        function getinfo(position) {
-          let city = position.address.city; //获取城市信息
-          let province = position.address.province; //获取省份信息
-          _this.LocationCity = city;
-           console.log(_this.LocationCity)
-        },
-        function(e) {
-          _this.LocationCity = "定位失败";
-        },
-        { provider: "baidu" }
-      );
-    }
+    //   const geolocation = new BMap.Geolocation();
+    //   var _this = this;
+    //   geolocation.getCurrentPosition(
+    //     function getinfo(position) {
+    //       let city = position.address.city; //获取城市信息
+    //       let province = position.address.province; //获取省份信息
+    //       _this.LocationCity = city;
+    //       console.log(_this.LocationCity);
+    //     },
+    //     function(e) {
+    //       _this.LocationCity = "定位失败";
+    //     },
+    //     { provider: "baidu" }
+    //   );
+    // }
   },
   created() {
     // console.log(localStorage.getItem("code"));
@@ -136,7 +171,7 @@ export default {
     //     "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5e0a44419005b7f5&redirect_uri=http%3A%2F%2Fwww.hfqhj.cn%2Fjfxx&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
     // }
 
-    this.getinfohome();
+    // this.getinfohome();
   },
   mounted() {
     if (this.$route.query.name && this.$route.query.id) {
@@ -147,8 +182,7 @@ export default {
     // var code = this.getQueryVariable("code");
     // console.log(code);
     // localStorage.setItem("code", code);
-    this.city();
-   
+    // this.city();
   }
 };
 </script>

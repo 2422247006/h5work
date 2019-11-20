@@ -174,11 +174,11 @@ export default {
   box-shadow: 0 0.08rem 0.32rem -0.11rem rgba(0, 0, 0, 0.08);
 }
 .head {
-  width: 85%;
-  height: 10rem;
+  width: 88%;
+  height: 9rem;
   position: absolute;
   top: 8%;
-  left: 7.5%;
+  left: 6%;
   border-radius: 0.11rem;
   box-shadow: 0 0.16rem 0.32rem -0.16rem rgba(0, 0, 0, 0.24);
 }
@@ -189,7 +189,7 @@ export default {
 }
 .txt {
   width: 100%;
-  height: 3.8rem;
+  height: 4.5rem;
   position: absolute;
   bottom: 0;
   left: 0;

@@ -89,27 +89,164 @@ export default {
       changeactive: 0,
       changeactivetime: -1,
       show: false,
-      time_data: [],
-      timelist: [1, 2]
+      time_data: [
+        
+      ],
+      timelist: [{
+          time: "10:00",
+          status: true
+        },
+        {
+          time: "10:20",
+          status: true
+        },
+        {
+          time: "10:40",
+          status: false
+        },
+        {
+          time: "11:00",
+          status: false
+        },
+        {
+          time: "11:20",
+          status: false
+        },
+        {
+          time: "11:40",
+          status: false
+        },
+        {
+          time: "12:00",
+          status: false
+        },
+        {
+          time: "12:20",
+          status: false
+        },
+        {
+          time: "12:40",
+          status: false
+        },
+        {
+          time: "13:00",
+          status: false
+        },
+        {
+          time: "13:20",
+          status: false
+        },
+        {
+          time: "13:40",
+          status: false
+        },
+        {
+          time: "14:00",
+          status: false
+        },
+        {
+          time: "14:20",
+          status: false
+        },
+        {
+          time: "14:40",
+          status: false
+        },
+        {
+          time: "15:00",
+          status: false
+        },
+        {
+          time: "15:20",
+          status: false
+        },
+        {
+          time: "15:40",
+          status: false
+        },
+        {
+          time: "16:00",
+          status: false
+        },
+        {
+          time: "16:20",
+          status: false
+        },
+        {
+          time: "16:40",
+          status: false
+        },
+        {
+          time: "17:00",
+          status: true
+        },
+        {
+          time: "17:20",
+          status: false
+        },
+        {
+          time: "17:40",
+          status: false
+        },
+        {
+          time: "18:00",
+          status: false
+        },
+        {
+          time: "18:20",
+          status: false
+        },
+        {
+          time: "18:40",
+          status: false
+        },
+        {
+          time: "19:00",
+          status: false
+        },
+        {
+          time: "19:20",
+          status: false
+        },
+        {
+          time: "19:40",
+          status: false
+        },
+        {
+          time: "20:00",
+          status: false
+        },
+        {
+          time: "20:20",
+          status: false
+        },
+        {
+          time: "20:40",
+          status: false
+        },
+        {
+          time: "21:00",
+          status: false
+        }]
     };
   },
   methods: {
     choicedate(index, format) {
       var that = this;
-       localStorage.setItem("orderDate", format);
+      localStorage.setItem("orderDate", format);
       that.changeactive = index;
-      that.$axios
-        .get(that.$apiUrl + "/api/v1/schedule/order/query", {
-          params: {
-            date: format
-          }
-        })
-        .then(function(res) {
-          console.log(res.data.data);
-          that.timelist = res.data.data;
-        });
+      // that.$axios
+      //   .get(that.$apiUrl + "/api/v1/schedule/order/query", {
+      //     params: {
+      //       date: format
+      //     }
+      //   })
+      //   .then(function(res) {
+      //     console.log(res.data.data);
+      //     that.timelist = res.data.data;
+      //   });
     },
-    choicetime(index, status,time) {
+    choicetime(index, status, time) {
       if (status == false) {
         Notify({
           message: "当前时段不可选",
@@ -118,7 +255,7 @@ export default {
           duration: 600
         });
       } else {
-          localStorage.setItem("orderTime", time);
+        localStorage.setItem("orderTime", time);
         this.changeactivetime = index;
       }
     },
@@ -127,7 +264,6 @@ export default {
     },
     orderclick() {
       if (this.changeactivetime == -1) {
-     
         Notify({
           message: "请选择预约时间",
           color: "white",
@@ -139,10 +275,9 @@ export default {
           path: "/order"
         });
       }
-        //     this.$router.push({
-        //   path: "/order"
-        // });
-      
+      //     this.$router.push({
+      //   path: "/order"
+      // });
     }
   },
   created() {
@@ -169,17 +304,17 @@ export default {
       return v;
     });
     console.log(this.time_data);
-    var that = this;
-    that.$axios
-      .get(that.$apiUrl + "/api/v1/schedule/order/query", {
-        params: {
-          date: that.time_data[0].format
-        }
-      })
-      .then(function(res) {
-        console.log(res.data.data);
-        that.timelist = res.data.data;
-      });
+    // var that = this;
+    // that.$axios
+    //   .get(that.$apiUrl + "/api/v1/schedule/order/query", {
+    //     params: {
+    //       date: that.time_data[0].format
+    //     }
+    //   })
+    //   .then(function(res) {
+    //     console.log(res.data.data);
+    //     that.timelist = res.data.data;
+    //   });
   }
 };
 </script>

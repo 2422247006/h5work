@@ -3,7 +3,7 @@
     <!-- <div class="searchwrap">
       <img src="@/assets/icon/s.png" class="sericon" />
       <input type="search" placeholder="搜索你的城市" class="search" v-model="keyword" />
-    </div> -->
+    </div>-->
     <!-- <div class="list" v-if="keyword">
       <ul>
         <li>北京</li>
@@ -52,9 +52,13 @@
       <van-cell title="文本" />
       <van-cell title="文本" />
       <van-cell title="文本" />
-    </van-index-bar> -->
+    </van-index-bar>-->
     <ul>
-      <li v-for="item of cityList" :key="item.id" @click="routerclick(item.id,item.name)">{{item.name}}</li>
+      <li
+        v-for="item of cityList"
+        :key="item.id"
+        @click="routerclick(item.id,item.name)"
+      >{{item.name}}</li>
     </ul>
   </div>
 </template>
@@ -75,8 +79,17 @@ export default {
   // },
   data() {
     return {
-    //  keyword:''
-    cityList:[]
+      //  keyword:''
+      cityList: [
+        {
+          id: 1,
+          name: "北京"
+        },
+        {
+          id: 21,
+          name: "上海"
+        }
+      ]
     };
   },
   methods: {
@@ -86,28 +99,26 @@ export default {
     // showno() {
     //   this.key = false;
     // },
-    getinfocity(){
-     var that=this;
-      that.$axios
-        .get(that.$apiUrl+"/api/v1/store/city", {
-          params: {}
-        })
-        .then(function(res) {
-         that.cityList=res.data.data
-        })
-    },
-    routerclick(id,name){
-    this.$router.push(
-      { 
-        path: '/', 
-        query: { name: name,id:id }
-        }
-      );
+    // getinfocity(){
+    //  var that=this;
+    //   that.$axios
+    //     .get(that.$apiUrl+"/api/v1/store/city", {
+    //       params: {}
+    //     })
+    //     .then(function(res) {
+    //      that.cityList=res.data.data
+    //     })
+    // },
+    routerclick(id, name) {
+      this.$router.push({
+        path: "/",
+        query: { name: name, id: id }
+      });
     }
   },
   mounted() {
-     this.getinfocity()
-  },
+    //  this.getinfocity()
+  }
 };
 </script>
 
@@ -163,8 +174,8 @@ export default {
   overflow: scroll;
   padding: 0 0.37rem;
 } */
-.page{
-  padding:0.5rem;
+.page {
+  padding: 0.5rem;
   box-sizing: border-box;
 }
 ul li {

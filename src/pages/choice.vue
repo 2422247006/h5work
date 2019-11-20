@@ -27,6 +27,15 @@
 </template>
 <script>
 import { Tab, Tabs } from "vant";
+import img1 from '../assets/image/110.jpg'
+import img2 from '../assets/image/112.jpg'
+import img555 from '../assets/image/555.jpg'
+import img666 from '../assets/image/666.jpg'
+import img777 from '../assets/image/777.jpg'
+import img4 from '../assets/image/113.jpg'
+import img5 from '../assets/image/t10.jpg'
+import img6 from '../assets/image/t9.jpg'
+import img9 from '../assets/image/time1.jpg'
 export default {
   name: "choice",
   components: {
@@ -36,38 +45,231 @@ export default {
   data() {
     return {
       active: "",
-      choiceList:[]
+      choiceList: [
+        {
+          id: 1,
+          name: "出行办证",
+          productList: [
+            {
+              id: 3,
+              name: "身份证专区",
+              minPrice: 99,
+              productShow: img555,
+              productDetail: "/img/fm_20191028_2.jpg",
+              indexImg: img1,
+              model: "1组造型",
+              clothing: "1套服装",
+              background: "半身照",
+              negative: "1张精修底片",
+              processing: "1种冲印尺寸",
+              comboList: [
+                {
+                  id: 1,
+                  parentCombo: null,
+                  comboName: "套餐一",
+                  comboPrice: 122.24
+                },
+                {
+                  id: 2,
+                  parentCombo: null,
+                  comboName: "套餐二",
+                  comboPrice: 99.23
+                }
+              ]
+            },
+             {
+              id: 4,
+              name: "护照专区",
+              minPrice: 89,
+              productShow: img555,
+              productDetail: "/img/fm_20191028_2.jpg",
+              indexImg: img2,
+              model: "1组造型",
+              clothing: "1套服装",
+              background: "半身照",
+              negative: "1张精修底片",
+              processing: "1种冲印尺寸",
+              comboList: [
+                {
+                  id: 1,
+                  parentCombo: null,
+                  comboName: "套餐一",
+                  comboPrice: 122.24
+                },
+                {
+                  id: 2,
+                  parentCombo: null,
+                  comboName: "套餐二",
+                  comboPrice: 99.23
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: 2,
+          name: "职场护航",
+          productList: [
+             {
+              id: 3,
+              name: "职业照专区",
+              minPrice: 99,
+              productShow: img777,
+              productDetail: img1,
+              indexImg: img4,
+              model: "1组造型",
+              clothing: "1套服装",
+              background: "半身照",
+              negative: "1张精修底片",
+              processing: "1种冲印尺寸",
+              comboList: [
+                {
+                  id: 1,
+                  parentCombo: null,
+                  comboName: "套餐一",
+                  comboPrice: 122.24
+                },
+                {
+                  id: 2,
+                  parentCombo: null,
+                  comboName: "套餐二",
+                  comboPrice: 99.23
+                }
+              ]
+            },
+          ]
+        },
+        {
+          id: 3,
+          name: "新婚必备",
+          productList: [
+             {
+              id: 3,
+              name: "婚纱照专区",
+              minPrice: 199,
+              productShow: img666,
+              productDetail: "/img/fm_20191028_2.jpg",
+              indexImg: img5,
+              model: "1组造型",
+              clothing: "1套服装",
+              background: "半身照",
+              negative: "1张精修底片",
+              processing: "1种冲印尺寸",
+              comboList: [
+                {
+                  id: 1,
+                  parentCombo: null,
+                  comboName: "套餐一",
+                  comboPrice: 122.24
+                },
+                {
+                  id: 2,
+                  parentCombo: null,
+                  comboName: "套餐二",
+                  comboPrice: 99.23
+                }
+              ]
+            },
+          ]
+        },
+        {
+          id: 4,
+          name: "甜蜜瞬间",
+          productList: [
+             {
+              id: 3,
+              name: "情侣照专区",
+              minPrice: 199,
+              productShow: img555,
+              productDetail: "/img/fm_20191028_2.jpg",
+              indexImg: img6,
+              model: "1组造型",
+              clothing: "1套服装",
+              background: "半身照",
+              negative: "1张精修底片",
+              processing: "1种冲印尺寸",
+              comboList: [
+                {
+                  id: 1,
+                  parentCombo: null,
+                  comboName: "套餐一",
+                  comboPrice: 122.24
+                },
+                {
+                  id: 2,
+                  parentCombo: null,
+                  comboName: "套餐二",
+                  comboPrice: 99.23
+                }
+              ]
+            },
+          ]
+        },
+        {
+          id: 5,
+          name: "家庭团圆",
+          productList: [
+             {
+              id: 3,
+              name: "家庭照专区",
+              minPrice: 99,
+              productShow: img555,
+              productDetail: "/img/fm_20191028_2.jpg",
+              indexImg: img9,
+              model: "1组造型",
+              clothing: "1套服装",
+              background: "半身照",
+              negative: "1张精修底片",
+              processing: "1种冲印尺寸",
+              comboList: [
+                {
+                  id: 1,
+                  parentCombo: null,
+                  comboName: "套餐一",
+                  comboPrice: 122.24
+                },
+                {
+                  id: 2,
+                  parentCombo: null,
+                  comboName: "套餐二",
+                  comboPrice: 99.23
+                }
+              ]
+            },
+          ]
+        }
+      ]
     };
   },
 
   methods: {
-     getinfochoice(){
-     var that=this;
-      that.$axios
-        .get(that.$apiUrl+"/api/v1/product/list", {
-          params: {}
-        })
-        .then(function(res) {
-          console.log(res.data.data)
-         that.choiceList=res.data.data
-        })
-    },
+    //  getinfochoice(){
+    //  var that=this;
+    //   that.$axios
+    //     .get(that.$apiUrl+"/api/v1/product/list", {
+    //       params: {}
+    //     })
+    //     .then(function(res) {
+    //       console.log(res.data.data)
+    //      that.choiceList=res.data.data
+    //     })
+    // },
     showclick(item) {
-      console.log(item)
+      console.log(item);
       localStorage.setItem("productId", item.id);
-       localStorage.setItem("productName", item.name);
-        localStorage.setItem("productImg", item.indexImg);
-       
+      localStorage.setItem("productName", item.name);
+      localStorage.setItem("productImg", item.indexImg);
+
       this.$router.push({
         path: "/show",
-         query: { item: item }
+        query: { item: item }
       });
     }
   },
-created() {
-   // console.log(this.$route.query.id);
-    this.getinfochoice()
-}
+  created() {
+    // console.log(this.$route.query.id);
+    // this.getinfochoice()
+  }
 };
 </script>
 
@@ -137,12 +339,12 @@ created() {
 ul {
   width: 100%;
   height: auto;
-  padding:0.5rem 0rem;
+  padding: 0.5rem 0rem;
   box-sizing: border-box;
 }
 li {
   width: 100%;
-  height: 3.5rem;
+  height: 3rem;
   margin-bottom: 0.8rem;
   display: flex;
   position: relative;
@@ -166,7 +368,7 @@ li {
   font-size: 0.59rem;
   font-weight: 600;
   color: #45454d;
-  margin-top: 1.7rem;
+  margin-top: 1.4rem;
 }
 .p6 {
   font-size: 0.32rem;
