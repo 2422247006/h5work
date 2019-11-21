@@ -5,51 +5,64 @@
       <div class="headerwrap">
         <div class="txt">
           <p class="p">
-            <span class="p1">{{showinfo.name}}专区</span>
+            <span class="p1">{{showinfo.name}}</span>
             <span class="p2">￥{{showinfo.minPrice}}起</span>
           </p>
           <ul>
             <li>
               <img src="@/assets/icon/s1.png" alt />
               <span class="p3">化妆</span>
-              <span class="p4">{{showinfo.model}}</span>
+              <span class="p4">1组造型</span>
             </li>
             <li>
               <img src="@/assets/icon/s2.png" alt />
               <span class="p3">服装</span>
-              <span class="p4">{{showinfo.clothing}}</span>
+              <span class="p4">"1套服装"</span>
             </li>
             <li>
               <img src="@/assets/icon/s3.png" alt />
               <span class="p3">拍摄</span>
-              <span class="p4">{{showinfo.background}}</span>
+              <span class="p4">半身照</span>
             </li>
             <li>
               <img src="@/assets/icon/s4.png" alt />
               <span class="p3">修图</span>
-              <span class="p4">{{showinfo.negative}}</span>
+              <span class="p4">1张精修底片</span>
             </li>
             <li>
               <img src="@/assets/icon/s1.png" alt />
               <span class="p3">冲印</span>
-              <span class="p4">{{showinfo.processing}}</span>
+              <span class="p4">1种冲印尺寸</span>
             </li>
           </ul>
         </div>
       </div>
       <div class="head">
-        <img :src="showinfo.indexImg" class="headimg" />
+        <img v-if="showinfo.id==0" src="../assets/image/2110.jpg" class="headimg" />
+        <img v-if="showinfo.id==1" src="../assets/image/2111.jpg" class="headimg" />
+        <img v-if="showinfo.id==2" src="../assets/image/2112.jpg" class="headimg" />
+        <img v-if="showinfo.id==3" src="../assets/image/2113.jpg" class="headimg" />
+        <img v-if="showinfo.id==4" src="../assets/image/2114.jpg" class="headimg" />
+        <img v-if="showinfo.id==5" src="../assets/image/2115.jpg" class="headimg" />
+
+        <img v-if="showinfo.id==6" src="../assets/image/2116.jpg" class="headimg" />
+        <img v-if="showinfo.id==7" src="../assets/image/2118.jpg" class="headimg" />
+        <img v-if="showinfo.id==8" src="../assets/image/2119.jpg" class="headimg" />
       </div>
       <div class="con">
         <div class="imglist">
-          <van-tabs v-model="active" swipeable>
-            <van-tab v-for="item in tablist" :title="item.name" :key="item.id">
-              <div class="img_">
-                <img v-if="item.id==0" width="100%" :src="showinfo.productShow" />
-                <img v-if="item.id==1" width="100%" :src="showinfo.productShow" />
-              </div>
-            </van-tab>
-          </van-tabs>
+          <p class="ppp">产品展示</p>
+          <!-- <img width="100%" src="../assets/image/999.jpg" /> -->
+          <img v-if="showinfo.id==0" src="../assets/image/999.jpg" class="headimg" />
+          <img v-if="showinfo.id==1" src="../assets/image/555.jpg" class="headimg" />
+          <img v-if="showinfo.id==2" src="../assets/image/555.jpg" class="headimg" />
+          <img v-if="showinfo.id==3" src="../assets/image/666.jpg" class="headimg" />
+          <img v-if="showinfo.id==4" src="../assets/image/111.jpg" class="headimg" />
+          <img v-if="showinfo.id==5" src="../assets/image/iii.jpg" class="headimg" />
+
+          <img v-if="showinfo.id==6" src="../assets/image/111.jpg" class="headimg" />
+          <img v-if="showinfo.id==7" src="../assets/image/xxx.jpg" class="headimg" />
+          <img v-if="showinfo.id==8" src="../assets/image/777.jpg" class="headimg" />
         </div>
       </div>
     </div>
@@ -60,7 +73,7 @@
       position="bottom"
       :style="{ height: 'auto',padding:'0.37rem',boxSizing:'border-box' }"
     >
-      <p class="p5">{{showinfo.name}}专区</p>
+      <p class="p5">{{showinfo.name}}</p>
       <p class="p6">已选：{{choice}}</p>
       <div class="check">
         <p class="p7">产品类型</p>
@@ -99,12 +112,17 @@ export default {
   },
   data() {
     return {
+      showinfo: {},
       changeactive: -1,
       show: false,
       tablist: [{ id: 0, name: "产品展示" }, { id: 1, name: "产品内容" }],
       active: "",
       price: 0,
-      choice: ""
+      choice: "",
+      comboList: [
+        { id: 0, comboName: "套餐一" },
+        { id: 1, comboName: "套餐二" }
+      ]
     };
   },
   methods: {
@@ -135,15 +153,24 @@ export default {
     }
   },
   created() {
-    this.showinfo = this.$route.query.item;
-    var date = new Date();
-    console.log(date);
+   console.log(JSON.parse(localStorage.getItem("product")))
+    // console.log(this.$route.query.url)
+    this.showinfo = JSON.parse(localStorage.getItem("product"))
+    // var date = new Date();
+    // console.log(date);
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.ppp {
+  width: 100%;
+  height: 0.8rem;
+  line-height: 0.5rem;
+  font-size: 0.4rem;
+  color: #666;
+}
 .page {
   width: 100%;
   height: 100%;
@@ -165,7 +192,7 @@ export default {
 }
 .headerwrap {
   width: 95%;
-  height: 11rem;
+  height: 9.3rem;
   background: white;
   position: absolute;
   top: 20%;
@@ -174,11 +201,11 @@ export default {
   box-shadow: 0 0.08rem 0.32rem -0.11rem rgba(0, 0, 0, 0.08);
 }
 .head {
-  width: 88%;
-  height: 9rem;
+  width: 85%;
+  height: 8rem;
   position: absolute;
-  top: 8%;
-  left: 6%;
+  top: 5%;
+  left: 7.5%;
   border-radius: 0.11rem;
   box-shadow: 0 0.16rem 0.32rem -0.16rem rgba(0, 0, 0, 0.24);
 }
@@ -245,7 +272,7 @@ li {
 .con {
   width: 100%;
   height: 5rem;
-  margin-top: 7.5rem;
+  margin-top: 5.3rem;
 }
 .imglist {
   width: 100%;

@@ -51,24 +51,6 @@ export default {
           latitude: null,
           longitude: null
         },
-        {
-          id: 2,
-          storeName: "繁减肖像（朝阳店）",
-          storeAddr: "上海市朝阳区武宁路101号3F-11",
-          storeTel: "021-6125016",
-          storeImg: img2,
-          latitude: null,
-          longitude: null
-        },
-        {
-          id: 3,
-          storeName: "繁减肖像（高新店）",
-          storeAddr: "上海市高新区武宁路22号",
-          storeTel: "021-6125016",
-          storeImg: img3,
-          latitude: null,
-          longitude: null
-        }
       ],
       cityid: 21
     };
@@ -115,6 +97,8 @@ export default {
       });
     },
     choiceclick(id, name) {
+         localStorage.setItem("storeId", id);
+        localStorage.setItem("storeName", name);
       this.$router.push({
         path: "/choice",
         query: { id: id }
@@ -192,7 +176,7 @@ export default {
 .page {
   width: 100%;
   height: 100%;
-  background: rgb(237, 237, 237);
+  /* background: rgb(237, 237, 237); */
 }
 .place {
   display: flex;
@@ -249,7 +233,7 @@ li {
   overflow: hidden;
   border-radius: 0.21rem;
   -webkit-box-shadow: 0 0.08rem 0.32rem -0.11rem rgba(0, 0, 0, 0.08);
-  box-shadow: 0 0.08rem 0.32rem -0.11rem rgba(0, 0, 0, 0.08);
+  box-shadow: 0 0.08rem 0.32rem -0.11rem rgba(0, 0, 0, 0.5);
   position: relative;
   background: white;
 }

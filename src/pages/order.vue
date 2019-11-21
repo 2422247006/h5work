@@ -24,7 +24,15 @@
       <p class="p1">已选产品</p>
       <div class="infocon">
         <div class="proimg">
-          <img :src="productImg" style="width:100%;height:100%;" />
+             <img v-if="productId==0" src="../assets/image/2110.jpg" class="headimg" />
+        <img v-if="productId==1" src="../assets/image/2111.jpg" class="headimg" />
+        <img v-if="productId==2" src="../assets/image/2112.jpg" class="headimg" />
+        <img v-if="productId==3" src="../assets/image/2113.jpg" class="headimg" />
+        <img v-if="productId==4" src="../assets/image/2114.jpg" class="headimg" />
+        <img v-if="productId==5" src="../assets/image/2115.jpg" class="headimg" />
+        <img v-if="productId==6" src="../assets/image/2116.jpg" class="headimg" />
+        <img v-if="productId==7" src="../assets/image/2118.jpg" class="headimg" />
+        <img v-if="productId==8" src="../assets/image/2119.jpg" class="headimg" />
         </div>
         <div class="txt">
           <p class="p3">{{productName}}</p>
@@ -43,12 +51,7 @@
         <span class="s2">{{storeName}}</span>
       </p>
     </div>
-    <div class="info">
-      <!-- <p class="p1">预约须知</p>
-     <p class="p2">*预约成功后可修改两次时间</p>
-      <p class="p2">*若拍摄前48小时内申请退款需收取订单金额的15%作为手续费</p>-->
-      <img src="@/assets/image/order.png" style="width:100%;height:100%;" />
-    </div>
+   
     <div class="price">
       <p class="p9">
         合计
@@ -177,6 +180,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.headimg{
+  width:100%;
+  height:100%;
+}
 .page {
   width: 100%;
   height: 100%;
