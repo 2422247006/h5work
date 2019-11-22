@@ -53,16 +53,15 @@
         <div class="imglist">
           <p class="ppp">产品展示</p>
           <!-- <img width="100%" src="../assets/image/999.jpg" /> -->
-          <img v-if="showinfo.id==0" src="../assets/image/999.jpg" class="headimg" />
-          <img v-if="showinfo.id==1" src="../assets/image/555.jpg" class="headimg" />
-          <img v-if="showinfo.id==2" src="../assets/image/555.jpg" class="headimg" />
-          <img v-if="showinfo.id==3" src="../assets/image/666.jpg" class="headimg" />
-          <img v-if="showinfo.id==4" src="../assets/image/111.jpg" class="headimg" />
-          <img v-if="showinfo.id==5" src="../assets/image/iii.jpg" class="headimg" />
-
-          <img v-if="showinfo.id==6" src="../assets/image/111.jpg" class="headimg" />
-          <img v-if="showinfo.id==7" src="../assets/image/xxx.jpg" class="headimg" />
-          <img v-if="showinfo.id==8" src="../assets/image/777.jpg" class="headimg" />
+          <img v-if="showinfo.id==0" src="../assets/image/999.png" class="headimg" />
+          <img v-if="showinfo.id==1" src="../assets/image/555.png" class="headimg" />
+          <img v-if="showinfo.id==2" src="../assets/image/555.png" class="headimg" />
+          <img v-if="showinfo.id==3" src="../assets/image/666.png" class="headimg" />
+          <img v-if="showinfo.id==4" src="../assets/image/111.png" class="headimg" />
+          <img v-if="showinfo.id==5" src="../assets/image/iii.png" class="headimg" />
+          <img v-if="showinfo.id==6" src="../assets/image/111.png" class="headimg" />
+          <img v-if="showinfo.id==7" src="../assets/image/xxx.png" class="headimg" />
+          <img v-if="showinfo.id==8" src="../assets/image/777.png" class="headimg" />
         </div>
       </div>
     </div>
@@ -185,14 +184,14 @@ export default {
 .headerbg {
   width: 100%;
   height: 8rem;
-  background-image: url("../assets/image/hbg.png");
+  /* background-image: url("../assets/image/hbg.png"); */
   background-position: 0 0;
   background-repeat: no-repeat;
   background-size: 100% auto;
 }
 .headerwrap {
   width: 95%;
-  height: 9.3rem;
+  height: 8.5rem;
   background: white;
   position: absolute;
   top: 20%;
@@ -202,17 +201,17 @@ export default {
 }
 .head {
   width: 85%;
-  height: 8rem;
+  height: 7rem;
   position: absolute;
   top: 5%;
   left: 7.5%;
-  border-radius: 0.11rem;
+  border-radius: 0.3rem;
   box-shadow: 0 0.16rem 0.32rem -0.16rem rgba(0, 0, 0, 0.24);
 }
 .headimg {
   width: 100%;
   height: 100%;
-  border-radius: 0.11rem;
+  border-radius: 0.3rem;
 }
 .txt {
   width: 100%;
@@ -272,7 +271,7 @@ li {
 .con {
   width: 100%;
   height: 5rem;
-  margin-top: 5.3rem;
+  margin-top: 4.2rem;
 }
 .imglist {
   width: 100%;
