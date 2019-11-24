@@ -48,16 +48,16 @@ export default {
     },
     // login(){
     //   alert('123')
-    //  localStorage.setItem("token", '2');　
+    //  sessionStorage.setItem("token", '2');　
     // }
     loginhehe(){
       alert(123)
-      localStorage.setItem("token", '2');　
+      sessionStorage.setItem("token", '2');　
     }
   },
   created() {
-    console.log(localStorage.getItem("token"))
-    if (localStorage.getItem("token")==null) {
+    console.log(sessionStorage.getItem("token"))
+    if (sessionStorage.getItem("token")==null) {
       this.login = false;
     } else {
       this.login = true;

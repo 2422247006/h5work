@@ -132,9 +132,9 @@ export default {
       this.changeactive = index;
       this.choice = name;
       this.price = price;
-      localStorage.setItem("comboId", id);
-      localStorage.setItem("comboName", name);
-      localStorage.setItem("orderAmount", price);
+      sessionStorage.setItem("comboId", id);
+      sessionStorage.setItem("comboName", name);
+      sessionStorage.setItem("orderAmount", price);
     },
     timeclick() {
       if (this.changeactive == -1) {
@@ -152,9 +152,9 @@ export default {
     }
   },
   created() {
-   console.log(JSON.parse(localStorage.getItem("product")))
+   console.log(JSON.parse(sessionStorage.getItem("product")))
     // console.log(this.$route.query.url)
-    this.showinfo = JSON.parse(localStorage.getItem("product"))
+    this.showinfo = JSON.parse(sessionStorage.getItem("product"))
     // var date = new Date();
     // console.log(date);
   }

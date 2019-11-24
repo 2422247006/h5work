@@ -67,13 +67,13 @@ export default {
               id: 1,
               parentCombo: null,
               comboName: "套餐一",
-              comboPrice: 122.24
+              comboPrice: 0.1
             },
             {
               id: 2,
               parentCombo: null,
               comboName: "套餐二",
-              comboPrice: 199.23
+              comboPrice: 0.1
             }
           ]
         },
@@ -88,13 +88,13 @@ export default {
               id: 1,
               parentCombo: null,
               comboName: "套餐一",
-              comboPrice: 135.00
+              comboPrice:0.1
             },
             {
               id: 2,
               parentCombo: null,
               comboName: "套餐二",
-              comboPrice: 99.00
+              comboPrice: 0.1
             }
           ]
         },
@@ -109,13 +109,13 @@ export default {
               id: 1,
               parentCombo: null,
               comboName: "套餐一",
-              comboPrice: 122.24
+              comboPrice: 0.1
             },
             {
               id: 2,
               parentCombo: null,
               comboName: "套餐二",
-              comboPrice: 99.23
+              comboPrice: 0.1
             }
           ]
         },
@@ -263,9 +263,9 @@ export default {
     // },
     showclick(item) {
       console.log(item);
-      localStorage.setItem("productId", item.id);
-      localStorage.setItem("productName", item.name);
-      localStorage.setItem("product",JSON.stringify(item));
+      sessionStorage.setItem("productId", item.id);
+      sessionStorage.setItem("productName", item.name);
+      sessionStorage.setItem("product",JSON.stringify(item));
      
 
       this.$router.push({

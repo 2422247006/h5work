@@ -65,7 +65,7 @@ export default {
         .then(function(res) {
           if (res.data.status == "0000") {
           console.log(res.data.data)
-           localStorage.setItem("userId",res.data.data.id);
+           sessionStorage.setItem("userId",res.data.data.id);
            that.$router.go(-1);//返回上一层
           }else{
            

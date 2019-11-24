@@ -17,22 +17,22 @@
       </p>
       <p class="mess">
         <span class="s1">备注:</span>
-        <input type="text" class="inp" v-model="remark" placeholder="请填写手机号码" />
+        <input type="text" class="inp" v-model="remark" placeholder="需要和店家说的话" />
       </p>
     </div>
     <div class="info">
       <p class="p1">已选产品</p>
       <div class="infocon">
         <div class="proimg">
-             <img v-if="productId==0" src="../assets/image/2110.jpg" class="headimg" />
-        <img v-if="productId==1" src="../assets/image/2111.jpg" class="headimg" />
-        <img v-if="productId==2" src="../assets/image/2112.jpg" class="headimg" />
-        <img v-if="productId==3" src="../assets/image/2113.jpg" class="headimg" />
-        <img v-if="productId==4" src="../assets/image/2114.jpg" class="headimg" />
-        <img v-if="productId==5" src="../assets/image/2115.jpg" class="headimg" />
-        <img v-if="productId==6" src="../assets/image/2116.jpg" class="headimg" />
-        <img v-if="productId==7" src="../assets/image/2118.jpg" class="headimg" />
-        <img v-if="productId==8" src="../assets/image/2119.jpg" class="headimg" />
+          <img v-if="productId==0" src="../assets/image/2110.jpg" class="headimg" />
+          <img v-if="productId==1" src="../assets/image/2111.jpg" class="headimg" />
+          <img v-if="productId==2" src="../assets/image/2112.jpg" class="headimg" />
+          <img v-if="productId==3" src="../assets/image/2113.jpg" class="headimg" />
+          <img v-if="productId==4" src="../assets/image/2114.jpg" class="headimg" />
+          <img v-if="productId==5" src="../assets/image/2115.jpg" class="headimg" />
+          <img v-if="productId==6" src="../assets/image/2116.jpg" class="headimg" />
+          <img v-if="productId==7" src="../assets/image/2118.jpg" class="headimg" />
+          <img v-if="productId==8" src="../assets/image/2119.jpg" class="headimg" />
         </div>
         <div class="txt">
           <p class="p3">{{productName}}</p>
@@ -51,7 +51,7 @@
         <span class="s2">{{storeName}}</span>
       </p>
     </div>
-   
+
     <div class="price">
       <p class="p9">
         合计
@@ -102,8 +102,7 @@ export default {
       productId: "",
       comboId: "",
       productImg: "",
-      code: "",
-     
+      openId: ''
     };
   },
   methods: {
@@ -117,72 +116,98 @@ export default {
     onCancel() {
       this.sex = false;
     },
+    getQueryVariable(variable) {
+      var query = window.location.search.substring(1);
+      console.log(query);
+      var vars = query.split("&");
+      for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split("=");
+        if (pair[0] == variable) {
+          return pair[1];
+        }
+      }
+      return 0;
+    },
     payclick() {
-      // var that = this;
-      // that.$axios
-      //   .post(that.$apiUrl + "/api/v1/order/create", {
-      //     comboId: that.comboId,
-      //     custName: that.custName,
-      //     custPhone: that.custPhone,
-      //     orderAmount: that.orderAmount,
-      //     orderDate: that.orderDate,
-      //     orderTime: that.orderTime,
-      //     payType: "WEI_XIN",
-      //     productId: that.productId,
-      //     remark: that.remark,
-      //     storeId: that.storeId,
-      //     userCode: that.code,
-      //     userId: that.userId
-      //   })
-      //   .then(function(res) {
-      //     const zfdata = res.data.data
-      //     if (typeof WeixinJSBridge == "undefined"){
-      //                   if( document.addEventListener ){
-      //                       document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
-      //                   }else if (document.attachEvent){
-      //                       document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
-      //                       document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
-      //                   }
-      //                   }else{
-      //                   that.onBridgeReady(zfdata);
-      //               }
-      //   });
-      
+       var that = this
+      that.$axios
+        .post(that.$apiUrl + "/api/v1/order/create", {
+          comboId: that.comboId,
+          custName: that.custName,
+          custPhone: that.custPhone,
+          orderAmount: that.orderAmount,
+          orderDate: that.orderDate,
+          orderTime: that.orderTime,
+          payType: "WEI_XIN",
+          productId: that.productId,
+          remark: that.remark,
+          storeId: that.storeId,
+          openId: that.openId,
+          userId: that.userId
+        })
+        .then(function(res) {
+          const zfdata = res.data.data;
+          if (typeof WeixinJSBridge == "undefined") {
+            if (document.addEventListener) {
+              document.addEventListener(
+                "WeixinJSBridgeReady",
+                onBridgeReady,
+                false
+              );
+            } else if (document.attachEvent) {
+              document.attachEvent("WeixinJSBridgeReady", onBridgeReady);
+              document.attachEvent("onWeixinJSBridgeReady", onBridgeReady);
+            }
+          } else {
+            that.onBridgeReady(zfdata);
+          }
+        });
+    
+    
     },
     //调用微信支付
     onBridgeReady(zfdata) {
-      var pay_data = zfdata
+      var pay_data = zfdata;
       console.log(pay_data);
       WeixinJSBridge.invoke("getBrandWCPayRequest", pay_data, function(res) {
-       if(res.err_msg == "get_brand_wcpay_request:ok" ){
-                    alert('支付成功！')
-                    }
+        if (res.err_msg == "get_brand_wcpay_request:ok") {
+          alert("支付成功！");
+          this.$router.push({
+        path: "/orderall"
+      });
+        }
       });
     }
   },
   created() {
-    this.userId = localStorage.getItem("userId");
-    this.storeId = localStorage.getItem("storeId");
-    this.storeName = localStorage.getItem("storeName");
-    this.productId = localStorage.getItem("productId");
-    this.productName = localStorage.getItem("productName");
-    this.comboId = localStorage.getItem("comboId");
-    this.comboName = localStorage.getItem("comboName");
-    this.orderAmount = localStorage.getItem("orderAmount");
-    this.orderDate = localStorage.getItem("orderDate");
-    this.orderTime = localStorage.getItem("orderTime");
-    this.productImg = localStorage.getItem("productImg");
-    this.code = localStorage.getItem("code");
+    // this.userId = sessionStorage.getItem("userId");
+    this.userId = 1;
+    this.storeId = sessionStorage.getItem("storeId");
+    this.storeName = sessionStorage.getItem("storeName");
+    this.productId = sessionStorage.getItem("productId");
+    this.productName = sessionStorage.getItem("productName");
+    this.comboId = sessionStorage.getItem("comboId");
+    this.comboName = sessionStorage.getItem("comboName");
+    this.orderAmount = sessionStorage.getItem("orderAmount");
+    this.orderDate = sessionStorage.getItem("orderDate");
+    this.orderTime = sessionStorage.getItem("orderTime");
+    this.productImg = sessionStorage.getItem("productImg");
+    this.openId = sessionStorage.getItem("openId");
   },
-  mounted() {}
+  mounted() {
+   
+
+    // sessionStorage.setItem("code", code);
+    // this.city();
+  }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.headimg{
-  width:100%;
-  height:100%;
+.headimg {
+  width: 100%;
+  height: 100%;
 }
 .page {
   width: 100%;

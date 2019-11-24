@@ -31,9 +31,9 @@
 <script>
 import { Popup } from "vant";
 // import BMap from "BMap";
-import img1 from '../assets/image/1136.jpg'
-import img2 from '../assets/image/1152.jpg'
-import img3 from '../assets/image/1153.jpg'
+import img1 from "../assets/image/1136.jpg";
+import img2 from "../assets/image/1152.jpg";
+import img3 from "../assets/image/1153.jpg";
 export default {
   name: "home",
   data() {
@@ -47,12 +47,13 @@ export default {
           storeName: "繁减肖像（普陀店）",
           storeAddr: "上海市普陀区武宁路101号我格广场4F-11",
           storeTel: "021-6125016",
-          storeImg:img1,
+          storeImg: img1,
           latitude: null,
           longitude: null
-        },
+        }
       ],
-      cityid: 21
+      cityid: 21,
+      code: null
     };
   },
   components: {
@@ -66,19 +67,19 @@ export default {
   methods: {
     clear111() {
       alert(123);
-      // localStorage.removeItem("userId");
-      // localStorage.removeItem("storeId");
-      // localStorage.removeItem("storeName");
-      // localStorage.removeItem("productId");
-      // localStorage.removeItem("productName");
-      // localStorage.removeItem("comboId");
-      // localStorage.removeItem("comboName");
-      // localStorage.removeItem("orderAmount");
-      // localStorage.removeItem("orderDate");
-      // localStorage.removeItem("orderTime");
-      // localStorage.removeItem("productImg");
-      // localStorage.removeItem("token");
-      // localStorage.removeItem("code");
+      sessionStorage.removeItem("userId");
+      sessionStorage.removeItem("storeId");
+      sessionStorage.removeItem("storeName");
+      sessionStorage.removeItem("productId");
+      sessionStorage.removeItem("productName");
+      sessionStorage.removeItem("comboId");
+      sessionStorage.removeItem("comboName");
+      sessionStorage.removeItem("orderAmount");
+      sessionStorage.removeItem("orderDate");
+      sessionStorage.removeItem("orderTime");
+      sessionStorage.removeItem("productImg");
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("code");
     },
     // getinfohome() {
     //   var that = this;
@@ -97,41 +98,41 @@ export default {
       });
     },
     choiceclick(id, name) {
-         localStorage.setItem("storeId", id);
-        localStorage.setItem("storeName", name);
+      sessionStorage.setItem("storeId", id);
+      sessionStorage.setItem("storeName", name);
       this.$router.push({
         path: "/choice",
         query: { id: id }
       });
-      // console.log(localStorage.getItem("userId"));
+      // console.log(sessionStorage.getItem("userId"));
 
-      // if (localStorage.getItem("userId") == null) {
+      // if (sessionStorage.getItem("userId") == null) {
       //   this.$router.push({
       //     path: "/register"
       //   });
       // } else {
-      //   localStorage.setItem("storeId", id);
-      //   localStorage.setItem("storeName", name);
+      //   sessionStorage.setItem("storeId", id);
+      //   sessionStorage.setItem("storeName", name);
       //   this.$router.push({
       //     path: "/choice",
       //     query: { id: id }
       //   });
       // }
     },
-    // getQueryVariable(variable) {
-    //   var query = window.location.search.substring(1);
-    //   console.log(query);
-    //   var vars = query.split("&");
-    //   for (var i = 0; i < vars.length; i++) {
-    //     var pair = vars[i].split("=");
-    //     if (pair[0] == variable) {
-    //       return pair[1];
-    //     }
-    //   }
-    //   return false;
-    // },
+    getQueryVariable(variable) {
+      var query = window.location.search.substring(1);
+      console.log(query);
+      var vars = query.split("&");
+      for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split("=");
+        if (pair[0] == variable) {
+          return pair[1];
+        }
+      }
+      return null;
+    },
     // city() {
-      //定义获取城市方法
+    //定义获取城市方法
     //   const geolocation = new BMap.Geolocation();
     //   var _this = this;
     //   geolocation.getCurrentPosition(
@@ -147,26 +148,44 @@ export default {
     //     { provider: "baidu" }
     //   );
     // }
+    //获取openid
+    getcode(c) {
+      var that = this;
+      console.log(c + "123");
+      that.$axios
+        .post(that.$apiUrl + "/api/v1/order/openId", {
+          code: c
+        })
+        .then(function(res) {
+          console.log(res.data.data);
+           sessionStorage.removeItem("code");
+          sessionStorage.setItem("openId", res.data.data);
+        });
+    }
   },
   created() {
-    // console.log(localStorage.getItem("code"));
-    // if (localStorage.getItem("code") == null) {
-    //   window.location.href =
-    //     "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5e0a44419005b7f5&redirect_uri=http%3A%2F%2Fwww.hfqhj.cn%2Fjfxx&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
-    // }
+    var that = this;
+    console.log(sessionStorage.getItem("code"));
+    if (sessionStorage.getItem("code") == null) {
+      window.location.href =
+        "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5e0a44419005b7f5&redirect_uri=http%3A%2F%2Fwww.hfqhj.cn%2Fjfxx&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+    }
 
     // this.getinfohome();
   },
   mounted() {
-    if (this.$route.query.name && this.$route.query.id) {
-      this.cityname = this.$route.query.name;
-      this.cityid = this.$route.query.id;
+    var that = this;
+    if (that.$route.query.name && that.$route.query.id) {
+      that.cityname = that.$route.query.name;
+      that.cityid = that.$route.query.id;
     }
-
-    // var code = this.getQueryVariable("code");
-    // console.log(code);
-    // localStorage.setItem("code", code);
-    // this.city();
+    if (sessionStorage.getItem("code") !== null) {
+      that.code = that.getQueryVariable("code");
+      sessionStorage.setItem("code", that.code);
+      that.getcode(that.code);
+      // sessionStorage.setItem("code", code);
+      // this.city();
+    }
   }
 };
 </script>

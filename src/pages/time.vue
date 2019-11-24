@@ -6,7 +6,7 @@
         :class="{col:changeactive==index}"
         v-for="(item,index) in time_data"
         :key="item.id"
-        @click="choicedate(index,item.format)"
+        @click="choicedate(index,item.format_)"
       >{{item.date}}</span>
     </div>
     <div class="con">
@@ -92,159 +92,24 @@ export default {
       time_data: [
         
       ],
-      timelist: [{
-          time: "10:00",
-          status: true
-        },
-        {
-          time: "10:20",
-          status: true
-        },
-        {
-          time: "10:40",
-          status: false
-        },
-        {
-          time: "11:00",
-          status: false
-        },
-        {
-          time: "11:20",
-          status: false
-        },
-        {
-          time: "11:40",
-          status: false
-        },
-        {
-          time: "12:00",
-          status: false
-        },
-        {
-          time: "12:20",
-          status: false
-        },
-        {
-          time: "12:40",
-          status: false
-        },
-        {
-          time: "13:00",
-          status: false
-        },
-        {
-          time: "13:20",
-          status: false
-        },
-        {
-          time: "13:40",
-          status: false
-        },
-        {
-          time: "14:00",
-          status: false
-        },
-        {
-          time: "14:20",
-          status: false
-        },
-        {
-          time: "14:40",
-          status: false
-        },
-        {
-          time: "15:00",
-          status: false
-        },
-        {
-          time: "15:20",
-          status: false
-        },
-        {
-          time: "15:40",
-          status: false
-        },
-        {
-          time: "16:00",
-          status: false
-        },
-        {
-          time: "16:20",
-          status: false
-        },
-        {
-          time: "16:40",
-          status: false
-        },
-        {
-          time: "17:00",
-          status: true
-        },
-        {
-          time: "17:20",
-          status: false
-        },
-        {
-          time: "17:40",
-          status: false
-        },
-        {
-          time: "18:00",
-          status: false
-        },
-        {
-          time: "18:20",
-          status: false
-        },
-        {
-          time: "18:40",
-          status: false
-        },
-        {
-          time: "19:00",
-          status: false
-        },
-        {
-          time: "19:20",
-          status: false
-        },
-        {
-          time: "19:40",
-          status: false
-        },
-        {
-          time: "20:00",
-          status: false
-        },
-        {
-          time: "20:20",
-          status: false
-        },
-        {
-          time: "20:40",
-          status: false
-        },
-        {
-          time: "21:00",
-          status: false
-        }]
+      timelist: []
     };
   },
   methods: {
     choicedate(index, format) {
       var that = this;
-      localStorage.setItem("orderDate", format);
+      sessionStorage.setItem("orderDate", format);
       that.changeactive = index;
-      // that.$axios
-      //   .get(that.$apiUrl + "/api/v1/schedule/order/query", {
-      //     params: {
-      //       date: format
-      //     }
-      //   })
-      //   .then(function(res) {
-      //     console.log(res.data.data);
-      //     that.timelist = res.data.data;
-      //   });
+      that.$axios
+        .get(that.$apiUrl + "/api/v1/schedule/order/query", {
+          params: {
+            date: format
+          }
+        })
+        .then(function(res) {
+          console.log(res.data.data);
+          that.timelist = res.data.data;
+        });
     },
     choicetime(index, status, time) {
       if (status == false) {
@@ -255,7 +120,7 @@ export default {
           duration: 600
         });
       } else {
-        localStorage.setItem("orderTime", time);
+        sessionStorage.setItem("orderTime", time);
         this.changeactivetime = index;
       }
     },
@@ -283,6 +148,7 @@ export default {
   created() {
     const temp = [];
     const onyear = [];
+    const onyear_ = [];
     var weeklist = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
     for (let i = 0; i < 7; i++) {
       const time = new Date(new Date().setDate(new Date().getDate() + i));
@@ -293,6 +159,7 @@ export default {
       const strDate = `0${time.getDate()}`.slice(-2);
       temp.push(`${weekday}${month}月${strDate}日`);
       onyear.push(`${year}${month}${strDate}`);
+      onyear_.push(`${year}-${month}-${strDate}`);
     }
     console.log(onyear);
     this.time_data = temp.map(function(item, index) {
@@ -303,18 +170,22 @@ export default {
       v.format = onyear[i];
       return v;
     });
+    this.time_data = this.time_data.map((v, i) => {
+      v.format_ = onyear_[i];
+      return v;
+    });
     console.log(this.time_data);
-    // var that = this;
-    // that.$axios
-    //   .get(that.$apiUrl + "/api/v1/schedule/order/query", {
-    //     params: {
-    //       date: that.time_data[0].format
-    //     }
-    //   })
-    //   .then(function(res) {
-    //     console.log(res.data.data);
-    //     that.timelist = res.data.data;
-    //   });
+    var that = this;
+    that.$axios
+      .get(that.$apiUrl + "/api/v1/schedule/order/query", {
+        params: {
+          date: that.time_data[0].format
+        }
+      })
+      .then(function(res) {
+        console.log(res.data.data);
+        that.timelist = res.data.data;
+      });
   }
 };
 </script>
