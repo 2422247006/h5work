@@ -44,7 +44,7 @@
     <div class="info">
       <p class="mess">
         <span class="s2">到店时间</span>
-        <span class="s2">{{orderDate}}{{orderTime}}</span>
+        <span class="s2">{{orderDate_}}{{orderTime}}</span>
       </p>
       <p class="mess">
         <span class="s2">预约门店</span>
@@ -96,13 +96,14 @@ export default {
       comboName: "",
       orderAmount: "",
       orderDate: "",
+      orderDate_: "",
       orderTime: "",
       userId: "",
       storeId: "",
       productId: "",
       comboId: "",
       productImg: "",
-      openId: ''
+      openId: ""
     };
   },
   methods: {
@@ -129,7 +130,7 @@ export default {
       return 0;
     },
     payclick() {
-       var that = this
+      var that = this;
       that.$axios
         .post(that.$apiUrl + "/api/v1/order/create", {
           comboId: that.comboId,
@@ -162,8 +163,6 @@ export default {
             that.onBridgeReady(zfdata);
           }
         });
-    
-    
     },
     //调用微信支付
     onBridgeReady(zfdata) {
@@ -173,8 +172,8 @@ export default {
         if (res.err_msg == "get_brand_wcpay_request:ok") {
           alert("支付成功！");
           this.$router.push({
-        path: "/orderall"
-      });
+            path: "/orderall"
+          });
         }
       });
     }
@@ -189,14 +188,13 @@ export default {
     this.comboId = sessionStorage.getItem("comboId");
     this.comboName = sessionStorage.getItem("comboName");
     this.orderAmount = sessionStorage.getItem("orderAmount");
+    this.orderDate_ = sessionStorage.getItem("orderDate_");
     this.orderDate = sessionStorage.getItem("orderDate");
     this.orderTime = sessionStorage.getItem("orderTime");
     this.productImg = sessionStorage.getItem("productImg");
-    this.openId = sessionStorage.getItem("openId");
+    this.openId = localStorage.getItem("openId");
   },
   mounted() {
-   
-
     // sessionStorage.setItem("code", code);
     // this.city();
   }

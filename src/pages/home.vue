@@ -121,7 +121,6 @@ export default {
     },
     getQueryVariable(variable) {
       var query = window.location.search.substring(1);
-      console.log(query);
       var vars = query.split("&");
       for (var i = 0; i < vars.length; i++) {
         var pair = vars[i].split("=");
@@ -130,7 +129,7 @@ export default {
         }
       }
       return null;
-    },
+    }
     // city() {
     //定义获取城市方法
     //   const geolocation = new BMap.Geolocation();
@@ -149,43 +148,46 @@ export default {
     //   );
     // }
     //获取openid
-    getcode(c) {
-      var that = this;
-      console.log(c + "123");
-      that.$axios
-        .post(that.$apiUrl + "/api/v1/order/openId", {
-          code: c
-        })
-        .then(function(res) {
-          console.log(res.data.data);
-           sessionStorage.removeItem("code");
-          sessionStorage.setItem("openId", res.data.data);
-        });
-    }
+    // getcode(c) {
+    //   var that = this;
+    //   console.log(c + "354");
+    //   that.$axios
+    //     .post(that.$apiUrl + "/api/v1/order/openId", {
+    //       code: c
+    //     })
+    //     .then(function(res) {
+    //       console.log(res.data.data);
+    //       sessionStorage.setItem("openId", res.data.data);
+    //     });
+    // }
   },
   created() {
-    var that = this;
-    console.log(sessionStorage.getItem("code"));
-    if (sessionStorage.getItem("code") == null) {
-      window.location.href =
-        "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5e0a44419005b7f5&redirect_uri=http%3A%2F%2Fwww.hfqhj.cn%2Fjfxx&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
-    }
-
-    // this.getinfohome();
+    // var that = this;
+    // if (this.getQueryVariable("code")== null) {
+    //   window.location.href =
+    //     "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5e0a44419005b7f5&redirect_uri=http%3A%2F%2Fwww.hfqhj.cn%2Fjfxx&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+    // }else {
+    //   this.code = this.getQueryVariable("code");
+    //   this.getcode(this.code);
+    // }
+    // if (this.getQueryVariable("code") == null) {
+    // this.code = this.getQueryVariable("code");
+    //   this.getcode(this.code);
+    // }
+    // console.log(this.getQueryVariable("code")+123)
   },
   mounted() {
     var that = this;
-    if (that.$route.query.name && that.$route.query.id) {
-      that.cityname = that.$route.query.name;
-      that.cityid = that.$route.query.id;
-    }
-    if (sessionStorage.getItem("code") !== null) {
-      that.code = that.getQueryVariable("code");
-      sessionStorage.setItem("code", that.code);
-      that.getcode(that.code);
-      // sessionStorage.setItem("code", code);
-      // this.city();
-    }
+    var c = that.getQueryVariable("code");
+    console.log(c);
+    that.$axios
+      .get(that.$apiUrl + "/api/v1/order/openId", {
+        params: { code: c }
+      })
+      .then(function(res) {
+        console.log(res.data.data);
+        localStorage.setItem("openId", res.data.data);
+      });
   }
 };
 </script>

@@ -6,7 +6,7 @@
         :class="{col:changeactive==index}"
         v-for="(item,index) in time_data"
         :key="item.id"
-        @click="choicedate(index,item.format_)"
+        @click="choicedate(index,item.format,item.format_)"
       >{{item.date}}</span>
     </div>
     <div class="con">
@@ -96,9 +96,10 @@ export default {
     };
   },
   methods: {
-    choicedate(index, format) {
+    choicedate(index, format,format_) {
       var that = this;
-      sessionStorage.setItem("orderDate", format);
+      sessionStorage.setItem("orderDate_", format_);
+       sessionStorage.setItem("orderDate", format);
       that.changeactive = index;
       that.$axios
         .get(that.$apiUrl + "/api/v1/schedule/order/query", {
