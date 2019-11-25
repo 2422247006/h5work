@@ -75,13 +75,15 @@
 import { DatetimePicker } from "vant";
 import { Popup } from "vant";
 import { Picker } from "vant";
+import { Notify } from "vant";
 
 export default {
   name: "city",
   components: {
     [DatetimePicker.name]: DatetimePicker,
     [Popup.name]: Popup,
-    [Picker.name]: Picker
+    [Picker.name]: Picker,
+    [Notify.name]: Notify
   },
   data() {
     return {
@@ -131,56 +133,65 @@ export default {
     },
     payclick() {
       var that = this;
-      that.$axios
-        .post(that.$apiUrl + "/api/v1/order/create", {
-          comboId: that.comboId,
-          custName: that.custName,
-          custPhone: that.custPhone,
-          orderAmount: that.orderAmount,
-          orderDate: that.orderDate,
-          orderTime: that.orderTime,
-          payType: "WEI_XIN",
-          productId: that.productId,
-          remark: that.remark,
-          storeId: that.storeId,
-          openId: that.openId,
-          userId: that.userId
-        })
-        .then(function(res) {
-          const zfdata = res.data.data;
-          if (typeof WeixinJSBridge == "undefined") {
-            if (document.addEventListener) {
-              document.addEventListener(
-                "WeixinJSBridgeReady",
-                onBridgeReady,
-                false
-              );
-            } else if (document.attachEvent) {
-              document.attachEvent("WeixinJSBridgeReady", onBridgeReady);
-              document.attachEvent("onWeixinJSBridgeReady", onBridgeReady);
-            }
-          } else {
-            that.onBridgeReady(zfdata);
-          }
+      if (that.custName == "" || that.custPhone == "") {
+        Notify({
+          message: "请填写您的姓名和手机号",
+          color: "white",
+          background: "#ccc",
+          duration: 600
         });
+      } else {
+        that.$axios
+          .post(that.$apiUrl + "/api/v1/order/create", {
+            comboId: that.comboId,
+            custName: that.custName,
+            custPhone: that.custPhone,
+            orderAmount: that.orderAmount,
+            orderDate: that.orderDate,
+            orderTime: that.orderTime,
+            payType: "WEI_XIN",
+            productId: that.productId,
+            remark: that.remark,
+            storeId: that.storeId,
+            openId: that.openId,
+            userId: that.userId
+          })
+          .then(function(res) {
+            const zfdata = res.data.data;
+            if (typeof WeixinJSBridge == "undefined") {
+              if (document.addEventListener) {
+                document.addEventListener(
+                  "WeixinJSBridgeReady",
+                  onBridgeReady,
+                  false
+                );
+              } else if (document.attachEvent) {
+                document.attachEvent("WeixinJSBridgeReady", onBridgeReady);
+                document.attachEvent("onWeixinJSBridgeReady", onBridgeReady);
+              }
+            } else {
+              that.onBridgeReady(zfdata);
+            }
+          });
+      }
     },
     //调用微信支付
     onBridgeReady(zfdata) {
       var pay_data = zfdata;
       console.log(pay_data);
       WeixinJSBridge.invoke("getBrandWCPayRequest", pay_data, function(res) {
+       alert(res)
         if (res.err_msg == "get_brand_wcpay_request:ok") {
-          alert("支付成功！");
-          this.$router.push({
-            path: "/orderall"
-          });
+          alert('支付成功')
+          window.location.href="http://www.hfqhj.cn/jfxx/#/orderall";
+        }else{
+           alert('支付失败')
         }
       });
     }
   },
   created() {
-    // this.userId = sessionStorage.getItem("userId");
-    this.userId = 1;
+    this.userId = sessionStorage.getItem("userId");
     this.storeId = sessionStorage.getItem("storeId");
     this.storeName = sessionStorage.getItem("storeName");
     this.productId = sessionStorage.getItem("productId");
@@ -192,7 +203,8 @@ export default {
     this.orderDate = sessionStorage.getItem("orderDate");
     this.orderTime = sessionStorage.getItem("orderTime");
     this.productImg = sessionStorage.getItem("productImg");
-    this.openId = localStorage.getItem("openId");
+    this.openId =  sessionStorage.getItem("openId");
+    this.custPhone=sessionStorage.getItem("userphone");
   },
   mounted() {
     // sessionStorage.setItem("code", code);

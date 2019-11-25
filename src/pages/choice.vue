@@ -67,13 +67,13 @@ export default {
               id: 1,
               parentCombo: null,
               comboName: "套餐一",
-              comboPrice: 0.1
+              comboPrice: 0.01
             },
             {
               id: 2,
               parentCombo: null,
               comboName: "套餐二",
-              comboPrice: 0.1
+              comboPrice: 0.01
             }
           ]
         },

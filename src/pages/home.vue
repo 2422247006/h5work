@@ -79,7 +79,7 @@ export default {
       sessionStorage.removeItem("orderTime");
       sessionStorage.removeItem("productImg");
       sessionStorage.removeItem("token");
-      sessionStorage.removeItem("code");
+      sessionStorage.removeItem("openId");
     },
     // getinfohome() {
     //   var that = this;
@@ -98,26 +98,25 @@ export default {
       });
     },
     choiceclick(id, name) {
+      // sessionStorage.setItem("storeId", id);
+      // sessionStorage.setItem("storeName", name);
+      // this.$router.push({
+      //   path: "/choice",
+      //   query: { id: id }
+      // });
+      // console.log(sessionStorage.getItem("userId"));
       sessionStorage.setItem("storeId", id);
       sessionStorage.setItem("storeName", name);
-      this.$router.push({
-        path: "/choice",
-        query: { id: id }
-      });
-      // console.log(sessionStorage.getItem("userId"));
-
-      // if (sessionStorage.getItem("userId") == null) {
-      //   this.$router.push({
-      //     path: "/register"
-      //   });
-      // } else {
-      //   sessionStorage.setItem("storeId", id);
-      //   sessionStorage.setItem("storeName", name);
-      //   this.$router.push({
-      //     path: "/choice",
-      //     query: { id: id }
-      //   });
-      // }
+      if (sessionStorage.getItem("userId") == null) {
+        this.$router.push({
+          path: "/register"
+        });
+      } else {
+        this.$router.push({
+          path: "/choice",
+          query: { id: id }
+        });
+      }
     },
     getQueryVariable(variable) {
       var query = window.location.search.substring(1);
@@ -177,17 +176,19 @@ export default {
     // console.log(this.getQueryVariable("code")+123)
   },
   mounted() {
-    var that = this;
-    var c = that.getQueryVariable("code");
-    console.log(c);
-    that.$axios
-      .get(that.$apiUrl + "/api/v1/order/openId", {
-        params: { code: c }
-      })
-      .then(function(res) {
-        console.log(res.data.data);
-        localStorage.setItem("openId", res.data.data);
-      });
+    if (sessionStorage.getItem("openId") == null) {
+      var that = this;
+      var c = that.getQueryVariable("code");
+      console.log(c);
+      that.$axios
+        .get(that.$apiUrl + "/api/v1/order/openId", {
+          params: { code: c }
+        })
+        .then(function(res) {
+          console.log(res.data.data);
+          sessionStorage.setItem("openId", res.data.data);
+        });
+    }
   }
 };
 </script>

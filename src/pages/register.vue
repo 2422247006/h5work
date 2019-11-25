@@ -66,7 +66,11 @@ export default {
           if (res.data.status == "0000") {
           console.log(res.data.data)
            sessionStorage.setItem("userId",res.data.data.id);
-           that.$router.go(-1);//返回上一层
+            sessionStorage.setItem("userphone",that.phone);
+         
+            that.$router.push({
+        path: "/choice"
+      });
           }else{
            
              Notify({
