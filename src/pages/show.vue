@@ -191,7 +191,7 @@ export default {
 }
 .headerwrap {
   width: 95%;
-  height: 8.5rem;
+  height: 7.23rem;
   background: white;
   position: absolute;
   top: 20%;
@@ -200,11 +200,11 @@ export default {
   box-shadow: 0 0.08rem 0.32rem -0.11rem rgba(0, 0, 0, 0.08);
 }
 .head {
-  width: 85%;
-  height: 7rem;
+  width: 87%;
+  height:5.8rem;
   position: absolute;
   top: 5%;
-  left: 7.5%;
+  left: 6.5%;
   border-radius: 0.3rem;
   box-shadow: 0 0.16rem 0.32rem -0.16rem rgba(0, 0, 0, 0.24);
 }
@@ -225,7 +225,7 @@ export default {
 }
 .p {
   width: 100%;
-  height: 40%;
+  height: 45%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -271,7 +271,7 @@ li {
 .con {
   width: 100%;
   height: 5rem;
-  margin-top: 4.2rem;
+  margin-top: 3rem;
 }
 .imglist {
   width: 100%;
