@@ -42,15 +42,15 @@ export default {
       show: false,
       cityname: "上海",
       homeList: [
-        {
-          id: 1,
-          storeName: "繁减肖像（普陀店）",
-          storeAddr: "上海市普陀区武宁路101号我格广场4F-11",
-          storeTel: "021-6125016",
-          storeImg: img1,
-          latitude: null,
-          longitude: null
-        }
+        // {
+        //   id: 1,
+        //   storeName: "繁减肖像（普陀店）",
+        //   storeAddr: "上海市普陀区武宁路101号我格广场4F-11",
+        //   storeTel: "021-6125016",
+        //   storeImg: img1,
+        //   latitude: null,
+        //   longitude: null
+        // }
       ],
       cityid: 21,
       code: null
@@ -67,7 +67,7 @@ export default {
   methods: {
     clear111() {
       alert(123);
-      sessionStorage.removeItem("userId");
+     
       sessionStorage.removeItem("storeId");
       sessionStorage.removeItem("storeName");
       sessionStorage.removeItem("productId");
@@ -81,17 +81,17 @@ export default {
       sessionStorage.removeItem("token");
       sessionStorage.removeItem("openId");
     },
-    // getinfohome() {
-    //   var that = this;
-    //   that.$axios
-    //     .get(that.$apiUrl + "/api/v1/store/list/" + that.cityid, {
-    //       params: {}
-    //     })
-    //     .then(function(res) {
-    //       // console.log(res.data.data);
-    //       that.homeList = res.data.data;
-    //     });
-    // },
+    getinfohome() {
+      var that = this;
+      that.$axios
+        .get(that.$apiUrl + "/api/v1/store/list/" + that.cityid, {
+          params: {}
+        })
+        .then(function(res) {
+          // console.log(res.data.data);
+          that.homeList = res.data.data;
+        });
+    },
     cityclick() {
       this.$router.push({
         path: "/city"
@@ -161,6 +161,7 @@ export default {
     // }
   },
   created() {
+   
     // var that = this;
     // if (this.getQueryVariable("code")== null) {
     //   window.location.href =
@@ -176,6 +177,7 @@ export default {
     // console.log(this.getQueryVariable("code")+123)
   },
   mounted() {
+     this.getinfohome()
     if (sessionStorage.getItem("openId") == null) {
       var that = this;
       var c = that.getQueryVariable("code");

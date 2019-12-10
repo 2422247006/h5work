@@ -175,8 +175,13 @@ export default {
       v.format_ = onyear_[i];
       return v;
     });
-    console.log(this.time_data);
-    var that = this;
+  },
+  mounted() {
+     var that = this;
+      console.log(that.time_data);
+       console.log(that.time_data[0].format);
+     sessionStorage.setItem("orderDate", that.time_data[0].format);
+     sessionStorage.setItem("orderDate_", that.time_data[0].format_);
     that.$axios
       .get(that.$apiUrl + "/api/v1/schedule/order/query", {
         params: {
@@ -187,7 +192,7 @@ export default {
         console.log(res.data.data);
         that.timelist = res.data.data;
       });
-  }
+  },
 };
 </script>
 

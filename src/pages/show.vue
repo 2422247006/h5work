@@ -10,58 +10,42 @@
           </p>
           <ul>
             <li>
-              <img src="@/assets/icon/s1.png" alt />
+              <img src="@/assets/icon/s1.png" style="width:0.8rem;height:0.8rem;" alt />
               <span class="p3">化妆</span>
-              <span class="p4">1组造型</span>
+              <span class="p4">{{showinfo.model}}</span>
             </li>
             <li>
-              <img src="@/assets/icon/s2.png" alt />
+              <img src="@/assets/icon/s2.png" style="width:0.8rem;height:0.8rem;" alt />
               <span class="p3">服装</span>
-              <span class="p4">"1套服装"</span>
+              <span class="p4">{{showinfo.clothing}}</span>
             </li>
             <li>
-              <img src="@/assets/icon/s3.png" alt />
+              <img src="@/assets/icon/s3.png" style="width:0.8rem;height:0.8rem;" alt />
               <span class="p3">拍摄</span>
-              <span class="p4">半身照</span>
+              <span class="p4">{{showinfo.background}}</span>
             </li>
             <li>
-              <img src="@/assets/icon/s4.png" alt />
+              <img src="@/assets/icon/s4.png" style="width:0.8rem;height:0.8rem;" alt />
               <span class="p3">修图</span>
-              <span class="p4">1张精修底片</span>
+              <span class="p4">{{showinfo.negative}}</span>
             </li>
             <li>
-              <img src="@/assets/icon/s1.png" alt />
+              <img src="@/assets/icon/s5.png" style="width:0.8rem;height:0.8rem;" alt />
               <span class="p3">冲印</span>
-              <span class="p4">1种冲印尺寸</span>
+              <span class="p4">{{showinfo.processing}}</span>
             </li>
           </ul>
         </div>
       </div>
       <div class="head">
-        <img v-if="showinfo.id==0" src="../assets/image/2110.jpg" class="headimg" />
-        <img v-if="showinfo.id==1" src="../assets/image/2111.jpg" class="headimg" />
-        <img v-if="showinfo.id==2" src="../assets/image/2112.jpg" class="headimg" />
-        <img v-if="showinfo.id==3" src="../assets/image/2113.jpg" class="headimg" />
-        <img v-if="showinfo.id==4" src="../assets/image/2114.jpg" class="headimg" />
-        <img v-if="showinfo.id==5" src="../assets/image/2115.jpg" class="headimg" />
-
-        <img v-if="showinfo.id==6" src="../assets/image/2116.jpg" class="headimg" />
-        <img v-if="showinfo.id==7" src="../assets/image/2118.jpg" class="headimg" />
-        <img v-if="showinfo.id==8" src="../assets/image/2119.jpg" class="headimg" />
+        <img  :src="showinfo.indexImg" class="headimg" />
       </div>
       <div class="con">
         <div class="imglist">
           <p class="ppp">产品展示</p>
           <!-- <img width="100%" src="../assets/image/999.jpg" /> -->
-          <img v-if="showinfo.id==0" src="../assets/image/999.png" class="headimg" />
-          <img v-if="showinfo.id==1" src="../assets/image/555.png" class="headimg" />
-          <img v-if="showinfo.id==2" src="../assets/image/555.png" class="headimg" />
-          <img v-if="showinfo.id==3" src="../assets/image/666.png" class="headimg" />
-          <img v-if="showinfo.id==4" src="../assets/image/111.png" class="headimg" />
-          <img v-if="showinfo.id==5" src="../assets/image/iii.png" class="headimg" />
-          <img v-if="showinfo.id==6" src="../assets/image/111.png" class="headimg" />
-          <img v-if="showinfo.id==7" src="../assets/image/xxx.png" class="headimg" />
-          <img v-if="showinfo.id==8" src="../assets/image/777.png" class="headimg" />
+          <img :src="showinfo.productDetail" class="headimg" />
+         
         </div>
       </div>
     </div>
@@ -114,14 +98,10 @@ export default {
       showinfo: {},
       changeactive: -1,
       show: false,
-      tablist: [{ id: 0, name: "产品展示" }, { id: 1, name: "产品内容" }],
       active: "",
       price: 0,
       choice: "",
-      comboList: [
-        { id: 0, comboName: "套餐一" },
-        { id: 1, comboName: "套餐二" }
-      ]
+      
     };
   },
   methods: {

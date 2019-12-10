@@ -80,16 +80,7 @@ export default {
   data() {
     return {
       //  keyword:''
-      cityList: [
-        {
-          id: 1,
-          name: "北京"
-        },
-        {
-          id: 21,
-          name: "上海"
-        }
-      ]
+      cityList: []
     };
   },
   methods: {
@@ -99,16 +90,16 @@ export default {
     // showno() {
     //   this.key = false;
     // },
-    // getinfocity(){
-    //  var that=this;
-    //   that.$axios
-    //     .get(that.$apiUrl+"/api/v1/store/city", {
-    //       params: {}
-    //     })
-    //     .then(function(res) {
-    //      that.cityList=res.data.data
-    //     })
-    // },
+    getinfocity(){
+     var that=this;
+      that.$axios
+        .get(that.$apiUrl+"/api/v1/store/city", {
+          params: {}
+        })
+        .then(function(res) {
+         that.cityList=res.data.data
+        })
+    },
     routerclick(id, name) {
       this.$router.push({
         path: "/",
@@ -117,7 +108,7 @@ export default {
     }
   },
   mounted() {
-    //  this.getinfocity()
+     this.getinfocity()
   }
 };
 </script>

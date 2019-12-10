@@ -191,7 +191,7 @@ export default {
     }
   },
   created() {
-    this.userId = sessionStorage.getItem("userId");
+    this.userId =  localStorage.getItem("userId");
     this.storeId = sessionStorage.getItem("storeId");
     this.storeName = sessionStorage.getItem("storeName");
     this.productId = sessionStorage.getItem("productId");

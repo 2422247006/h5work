@@ -65,7 +65,7 @@ export default {
         .then(function(res) {
           if (res.data.status == "0000") {
           console.log(res.data.data)
-           sessionStorage.setItem("userId",res.data.data.id);
+           localStorage.setItem("userId",res.data.data.id);
             sessionStorage.setItem("userphone",that.phone);
          
             that.$router.push({
