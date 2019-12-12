@@ -107,7 +107,7 @@ export default {
       // console.log(sessionStorage.getItem("userId"));
       sessionStorage.setItem("storeId", id);
       sessionStorage.setItem("storeName", name);
-      if (sessionStorage.getItem("userId") == null) {
+      if (localStorage.getItem("userId") == null) {
         this.$router.push({
           path: "/register"
         });

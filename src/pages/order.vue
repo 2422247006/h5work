@@ -132,6 +132,7 @@ export default {
       return 0;
     },
     payclick() {
+      console.log(this.sex_)
       var that = this;
       if (that.custName == "" || that.custPhone == "") {
         Notify({
@@ -142,7 +143,7 @@ export default {
         });
       } else {
         that.$axios
-          .post(that.$apiUrl + "/api/v1/order/create", {
+          .post(that.$apiUrl + "/api/v1/order/create/wx", {
             comboId: that.comboId,
             custName: that.custName,
             custPhone: that.custPhone,
@@ -152,6 +153,7 @@ export default {
             payType: "WEI_XIN",
             productId: that.productId,
             remark: that.remark,
+            custSex:that.sex_,
             storeId: that.storeId,
             openId: that.openId,
             userId: that.userId
