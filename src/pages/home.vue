@@ -25,13 +25,12 @@
         </div>
       </li>
     </ul>
-    <van-loading type="spinner" color="#1989fa" />
+    
   </div>
 </template>
 
 <script>
 import { Popup } from "vant";
-import { Loading } from 'vant';
 // import BMap from "BMap";
 // import img1 from "../assets/image/1136.jpg";
 // import img2 from "../assets/image/1152.jpg";
@@ -59,8 +58,7 @@ export default {
     };
   },
   components: {
-    [Popup.name]: Popup,
-     [Loading.name]:Loading
+    [Popup.name]: Popup
   },
   watch: {
     // cityid() {
