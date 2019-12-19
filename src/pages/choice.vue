@@ -260,6 +260,7 @@ export default {
       console.log(item);
       sessionStorage.setItem("productId", item.id);
       sessionStorage.setItem("productName", item.name);
+       sessionStorage.setItem("productImg", item.indexImg);
       sessionStorage.setItem("product",JSON.stringify(item));
       this.$router.push({
         path: "/show"

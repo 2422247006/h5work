@@ -66,7 +66,7 @@ export default {
           if (res.data.status == "0000") {
           console.log(res.data.data)
            localStorage.setItem("userId",res.data.data.id);
-            sessionStorage.setItem("userphone",that.phone);
+            localStorage.setItem("userphone",that.phone);
          
             that.$router.push({
         path: "/choice"

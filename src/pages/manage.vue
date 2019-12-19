@@ -1,15 +1,17 @@
 <template>
   <div class="hello">
     <!-- <van-button type="primary">主要按钮</van-button> -->
-     <keep-alive>
-        <router-view></router-view>
-      </keep-alive>
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
     <div class="footer">
-      <div class="nav" 
-      v-for="(item,index) of list" 
-      :key="item.id"
-      :class="{navstyle:changeactive==index}"
-      @click="routerclick(index,item.imgurl_,item.title,item.url)">
+      <div
+        class="nav"
+        v-for="(item,index) of list"
+        :key="item.id"
+        :class="{navstyle:changeactive==index}"
+        @click="routerclick(index,item.imgurl_,item.title,item.url)"
+      >
         <img :src="changeactive===index?item.imgurl_:item.imgurl" class="imgsize" />
         {{item.name}}
       </div>
@@ -32,31 +34,67 @@ export default {
   // }
   data() {
     return {
-      changeactive:0,
+      changeactive: 0,
       list: [
-        { id: 0, imgurl: img2, imgurl_: img2_,name: "预约",title:"门店选择",url:'/' },
-        { id: 1, imgurl: img3, imgurl_: img3_,name: "订单",title:"我的订单",url:'/orderall'},
-        { id: 2, imgurl: img4,imgurl_: img4_, name: "我的",title:"个人中心",url:'/my'}
+        {
+          id: 0,
+          imgurl: img2,
+          imgurl_: img2_,
+          name: "预约",
+          title: "门店选择",
+          url: "/"
+        },
+        {
+          id: 1,
+          imgurl: img3,
+          imgurl_: img3_,
+          name: "订单",
+          title: "我的订单",
+          url: "/orderall"
+        },
+        {
+          id: 2,
+          imgurl: img4,
+          imgurl_: img4_,
+          name: "我的",
+          title: "个人中心",
+          url: "/my"
+        }
       ]
     };
   },
-  methods:{
-    routerclick: function(index,imgurl,title,url) {
+  methods: {
+    routerclick: function(index, imgurl, title, url) {
       var that = this;
       that.changeactive = index;
-      document.title = title
-      that.$router.push({
-        path: url
-      });
-      if (index == 1) {
-        that.show=!that.show
-      }else{
-        that.show=false
+     
+      document.title = title;
+      if (that.changeactive == 1) {
+         
+        if (localStorage.getItem("userId") == null) {
+          this.$router.push({
+            path: "/register"
+          });
+        } else {
+           that.$router.push({
+          path: url
+        });
+        }
+      } else {
+        that.$router.push({
+          path: url
+        });
       }
+
+      // if (index == 1) {
+      //   that.show=!that.show
+      // }else{
+      //   that.show=false
+      // }
     }
   },
-  mounted (){
-    document.title = "门店选择"
+  mounted() {
+    document.title = "门店选择";
   }
 };
 </script>
@@ -82,13 +120,13 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-   color: #7d7e80;
+  color: #7d7e80;
 }
-.navstyle{
-  color:#1989fa;
+.navstyle {
+  color: #1989fa;
 }
-.imgsize{
-  width:0.4rem;
-  height:0.4rem;
+.imgsize {
+  width: 0.4rem;
+  height: 0.4rem;
 }
 </style>

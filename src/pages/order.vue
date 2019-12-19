@@ -24,7 +24,8 @@
       <p class="p1">已选产品</p>
       <div class="infocon">
         <div class="proimg">
-          <img v-if="productId==0" src="../assets/image/2110.jpg" class="headimg" />
+           <img  :src="productImg" class="headimg" />
+          <!-- <img v-if="productId==0" src="../assets/image/2110.jpg" class="headimg" />
           <img v-if="productId==1" src="../assets/image/2111.jpg" class="headimg" />
           <img v-if="productId==2" src="../assets/image/2112.jpg" class="headimg" />
           <img v-if="productId==3" src="../assets/image/2113.jpg" class="headimg" />
@@ -32,7 +33,7 @@
           <img v-if="productId==5" src="../assets/image/2115.jpg" class="headimg" />
           <img v-if="productId==6" src="../assets/image/2116.jpg" class="headimg" />
           <img v-if="productId==7" src="../assets/image/2118.jpg" class="headimg" />
-          <img v-if="productId==8" src="../assets/image/2119.jpg" class="headimg" />
+          <img v-if="productId==8" src="../assets/image/2119.jpg" class="headimg" /> -->
         </div>
         <div class="txt">
           <p class="p3">{{productName}}</p>
@@ -206,7 +207,7 @@ export default {
     this.orderTime = sessionStorage.getItem("orderTime");
     this.productImg = sessionStorage.getItem("productImg");
     this.openId =  sessionStorage.getItem("openId");
-    this.custPhone=sessionStorage.getItem("userphone");
+    this.custPhone=localStorage.getItem("userphone");
   },
   mounted() {
     // sessionStorage.setItem("code", code);

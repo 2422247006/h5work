@@ -1,157 +1,42 @@
 <template>
   <div class="page">
-    <van-tabs v-model="active">
-      <van-tab title="全部">
-        <div class="info">
+    <!-- <van-tabs v-model="active">
+      <van-tab title="全部"> -->
+        <div class="info" v-for="item in infolist" :key="item.id">
           <p class="p1">
-            <span class="p5">订单号：2019101155819084</span>
-            <span class="p5">已完成</span>
+            <span class="p5">订单号：{{item.orderNum}}</span>
+            <span class="p5">{{item.status}}</span>
           </p>
           <div class="infocon">
-            <div class="proimg">
-              <img src="@/assets/image/time2.jpg" style="width:100%;height:100%;" />
-            </div>
             <div class="txt">
-              <p class="p3">证件照套餐专区</p>
-              <p class="p2">证件照三底色套餐</p>
+              <p class="p3">{{item.orderName}}</p>
+              <!-- <p class="p2">套餐名称</p> -->
             </div>
-            <p class="p4">￥229</p>
+            <p class="p4">￥{{item.actualPay}}</p>
           </div>
           <div class="time">
-            <p class="p5">拍摄门店：长春卓展店</p>
-            <p class="p5">到店时间：2019-10-10 17:00</p>
+            <!-- <p class="p5">拍摄门店：长春卓展店</p> -->
+            <p class="p5">到店时间：{{item.orderDate}}{{item.orderTime}}</p>
             <!-- <p class="p3 abs">
               总计
               <span class="p4">￥2199</span>
             </p>-->
           </div>
           <div class="btn">
-            <p class="delete">删除订单</p>
-            <p class="updown" @click="updowmclick">下载成片</p>
+            <p class="delete"></p>
+            <p class="updown" @click="updowmclick(item.orderNum)">下载成片</p>
           </div>
         </div>
-      </van-tab>
-      <van-tab title="待拍摄">
-        <div class="info">
-          <p class="p1">
-            <span class="p5">订单号：2019101155819084</span>
-            <span class="p5">待拍摄</span>
-          </p>
-          <div class="infocon">
-            <div class="proimg">
-              <img src="@/assets/image/time2.jpg" style="width:100%;height:100%;" />
-            </div>
-            <div class="txt">
-              <p class="p3">证件照套餐专区</p>
-              <p class="p2">证件照三底色套餐</p>
-            </div>
-            <p class="p4">￥229</p>
-          </div>
-          <div class="time">
-            <p class="p5">拍摄门店：长春卓展店</p>
-            <p class="p5">到店时间：2019-10-10 17:00</p>
-            <!-- <p class="p3 abs">
-              总计
-              <span class="p4">￥2199</span>
-            </p>-->
-          </div>
-          <div class="btn">
-            <p class="delete">删除订单</p>
-            <p class="updown">下载成片</p>
-          </div>
-        </div>
-      </van-tab>
-      <van-tab title="进行中">
-        <div class="info">
-          <p class="p1">
-            <span class="p5">订单号：2019101155819084</span>
-            <span class="p5">进行中</span>
-          </p>
-          <div class="infocon">
-            <div class="proimg">
-              <img src="@/assets/image/time2.jpg" style="width:100%;height:100%;" />
-            </div>
-            <div class="txt">
-              <p class="p3">证件照套餐专区</p>
-              <p class="p2">证件照三底色套餐</p>
-            </div>
-            <p class="p4">￥229</p>
-          </div>
-          <div class="time">
-            <p class="p5">拍摄门店：长春卓展店</p>
-            <p class="p5">到店时间：2019-10-10 17:00</p>
-            <!-- <p class="p3 abs">
-              总计
-              <span class="p4">￥2199</span>
-            </p>-->
-          </div>
-          <div class="btn">
-            <p class="delete">删除订单</p>
-            <p class="updown">下载成片</p>
-          </div>
-        </div>
-      </van-tab>
-      <van-tab title="已完成">
-        <div class="info">
-          <p class="p1">
-            <span class="p5">订单号：2019101155819084</span>
-            <span class="p5">已完成</span>
-          </p>
-          <div class="infocon">
-            <div class="proimg">
-              <img src="@/assets/image/time2.jpg" style="width:100%;height:100%;" />
-            </div>
-            <div class="txt">
-              <p class="p3">证件照套餐专区</p>
-              <p class="p2">证件照三底色套餐</p>
-            </div>
-            <p class="p4">￥229</p>
-          </div>
-          <div class="time">
-            <p class="p5">拍摄门店：长春卓展店</p>
-            <p class="p5">到店时间：2019-10-10 17:00</p>
-            <!-- <p class="p3 abs">
-              总计
-              <span class="p4">￥2199</span>
-            </p>-->
-          </div>
-          <div class="btn">
-            <p class="delete">删除订单</p>
-            <p class="updown">下载成片</p>
-          </div>
-        </div>
-      </van-tab>
-      <van-tab title="已关闭">
-        <div class="info">
-          <p class="p1">
-            <span class="p5">订单号：2019101155819084</span>
-            <span class="p5">已关闭</span>
-          </p>
-          <div class="infocon">
-            <div class="proimg">
-              <img src="@/assets/image/time2.jpg" style="width:100%;height:100%;" />
-            </div>
-            <div class="txt">
-              <p class="p3">证件照套餐专区</p>
-              <p class="p2">证件照三底色套餐</p>
-            </div>
-            <p class="p4">￥229</p>
-          </div>
-          <div class="time">
-            <p class="p5">拍摄门店：长春卓展店</p>
-            <p class="p5">到店时间：2019-10-10 17:00</p>
-            <!-- <p class="p3 abs">
-              总计
-              <span class="p4">￥2199</span>
-            </p>-->
-          </div>
-          <div class="btn">
-            <p class="delete">删除订单</p>
-            <p class="updown">下载成片</p>
-          </div>
-        </div>
-      </van-tab>
-    </van-tabs>
+      <!-- </van-tab>
+      <van-tab title="待拍摄"> -->
+      <!-- </van-tab>
+      <van-tab title="进行中"> -->
+      <!-- </van-tab>
+      <van-tab title="已完成"> -->
+      <!-- </van-tab>
+      <van-tab title="已关闭"> -->
+      <!-- </van-tab>
+    </van-tabs> -->
     <van-popup
       v-model="eval"
       round
@@ -163,68 +48,91 @@
         <li class="li">
           <p class="p3 li_left"></p>
           <div class="icon">
-            <span class="p3">超满意</span>
+             <span class="p3">不满意</span>
             <span class="p3">基本满意</span>
-            <span class="p3">不满意</span>
+             <span class="p3">超满意</span>
+           
           </div>
         </li>
         <li class="li">
           <p class="p3 li_left">总体体验</p>
           <div class="icon">
-            <img
+            <van-rate v-model="value" :size="30" :count="3"  icon="like"
+  void-icon="like-o" />
+            <!-- <img
               :src="changeactive===index?item.url:item.url_"
               :key="item.id"
               v-for="(item,index) of iconlist"
               @click="btnclick(0,index)"
-            />
+            /> -->
           </div>
         </li>
         <li class="li">
           <p class="p3 li_left">前台</p>
           <div class="icon">
-            <img
+             <van-rate v-model="value" :size="30" :count="3"  icon="like"
+  void-icon="like-o" />
+            <!-- <img
               :src="changeactive2===index?item.url:item.url_"
               :key="item.id"
               v-for="(item,index) of iconlist2"
               @click="btnclick(1,index)"
-            />
+            /> -->
           </div>
         </li>
         <li class="li">
           <p class="p3 li_left">化妆师</p>
           <div class="icon">
-            <img
+             <van-rate v-model="value" :size="30" :count="3"  icon="like"
+  void-icon="like-o" />
+            <!-- <img
               :src="changeactive3===index?item.url:item.url_"
               :key="item.id"
               v-for="(item,index) of iconlist3"
               @click="btnclick(2,index)"
-            />
+            /> -->
           </div>
         </li>
         <li class="li">
           <p class="p3 li_left">摄影师</p>
           <div class="icon">
-            <img
+             <van-rate v-model="value" :size="30" :count="3"  icon="like"
+  void-icon="like-o" />
+            <!-- <img
               :src="changeactive4===index?item.url:item.url_"
               :key="item.id"
               v-for="(item,index) of iconlist4"
               @click="btnclick(3,index)"
-            />
+            /> -->
           </div>
         </li>
         <li class="li">
           <p class="p3 li_left">看片师</p>
           <div class="icon">
-            <img
+             <van-rate v-model="value" :size="30" :count="3"  icon="like"
+  void-icon="like-o" />
+            <!-- <img
               :src="changeactive5===index?item.url:item.url_"
               :key="item.id"
               v-for="(item,index) of iconlist5"
               @click="btnclick(4,index)"
-            />
+            /> -->
           </div>
         </li>
       </ul>
-      <textarea name id placeholder="请写下您的宝贵建议" v-if="ask" v-model="textarea"></textarea>
+      <!-- <textarea name id placeholder="请写下您的宝贵建议" v-if="ask" v-model="textarea"></textarea> -->
+      <van-cell-group>
+  <van-field
+    v-model="textarea"
+    rows="2"
+    autosize
+    type="textarea"
+    maxlength="100"
+    placeholder="请写下您的宝贵建议"
+    show-word-limit
+   
+  />
+</van-cell-group>
       <p class="p11" @click="submit">提交</p>
     </van-popup>
   </div>
@@ -233,21 +141,33 @@
 <script>
 import { Tab, Tabs } from "vant";
 import { Popup } from "vant";
-import m_png from "@/assets/icon/m_.png";
-import jm_png from "@/assets/icon/jm_.png";
-import bm_png from "@/assets/icon/bm_.png";
-import mpng from "@/assets/icon/m.png";
-import jmpng from "@/assets/icon/jm.png";
-import bmpng from "@/assets/icon/bm.png";
+import { Rate } from 'vant';
+import { Field } from 'vant';
+
 export default {
   name: "orderall",
   components: {
     [Tab.name]: Tab,
     [Tabs.name]: Tabs,
-    [Popup.name]: Popup
+    [Popup.name]: Popup,
+    [Rate.name]: Rate,
+    [Field.name]: Field
   },
   data() {
     return {
+      value:'3',
+      phone:'',
+      aaa:'',
+      infolist:[],
+      listdata: {
+        custName: null,
+        custPhone: 15044003242,
+        orderDate: "",
+        orderNum: null,
+        pageNum: 1,
+        pageSize: 10,
+        status: null
+      },
       ask: false,
       textarea: "",
       changeactive: 0,
@@ -258,29 +178,9 @@ export default {
       active: 0,
       eval: false,
       iconlist: [
-        { id: 0, url_: m_png, url: mpng },
-        { id: 1, url_: jm_png, url: jmpng },
-        { id: 2, url_: bm_png, url: bmpng }
+        
       ],
       iconlist2: [
-        { id: 0, url_: m_png, url: mpng },
-        { id: 1, url_: jm_png, url: jmpng },
-        { id: 2, url_: bm_png, url: bmpng }
-      ],
-      iconlist3: [
-        { id: 0, url_: m_png, url: mpng },
-        { id: 1, url_: jm_png, url: jmpng },
-        { id: 2, url_: bm_png, url: bmpng }
-      ],
-      iconlist4: [
-        { id: 0, url_: m_png, url: mpng },
-        { id: 1, url_: jm_png, url: jmpng },
-        { id: 2, url_: bm_png, url: bmpng }
-      ],
-      iconlist5: [
-        { id: 0, url_: m_png, url: mpng },
-        { id: 1, url_: jm_png, url: jmpng },
-        { id: 2, url_: bm_png, url: bmpng }
       ]
     };
   },
@@ -303,15 +203,56 @@ export default {
         this.changeactive5 = index;
       }
     },
-    updowmclick(){
-      this.eval=true
+    updowmclick(orderNum) {
+       sessionStorage.setItem("orderNum", orderNum);
+      this.eval = true;
     },
     submit() {
       this.$router.push({
         path: "/updown"
       });
+    },
+    getinfo() {
+      var that = this;
+      that.$axios
+        .get(that.$apiUrl + "/api/v1/user/order",{
+          params:{
+            phone:that.phone
+          }
+        })
+        .then(function(res) {
+          console.log(res.data)
+          that.infolist = res.data.data.map(function(item) {
+            if (item.status == "unpaid") {
+              item.status = "未支付";
+            } else if (item.status == "paid") {
+              item.status = "等待拍摄";
+            } else if (item.status == "underway") {
+              item.status = "拍摄中";
+            } else if (item.status == "finish") {
+              item.status = "已完成";
+            } else if (item.status == "closed") {
+              item.status = "已关闭";
+            }
+             var ccc=item.orderDate.toString()
+           
+            var ddd = ccc.slice(0, 4) + "-" + ccc.slice(4);
+             item.orderDate = ddd.slice(0, 7) + "-" + ddd.slice(7);
+          
+            return  item;
+          });
+         
+        });
+      
     }
-  }
+  },
+  created(){
+   
+  },
+  mounted() {
+    this.phone=localStorage.getItem("userphone");
+     this.getinfo()
+  },
 };
 </script>
 
@@ -347,7 +288,6 @@ export default {
   flex: 1;
 }
 .p3 {
-  margin-top: 0.72rem;
   font-size: 0.37rem;
   font-weight: 700;
   line-height: 0.53rem;
@@ -386,7 +326,7 @@ export default {
   line-height: 1rem;
   text-align: center;
   font-size: 0.37rem;
-  background: red;
+  
   color: white;
   border-radius: 0.11rem;
 }
@@ -446,5 +386,12 @@ textarea {
 }
 .van-tabs__line {
   background-color: #1989fa;
+}
+.van-rate__icon{
+  margin:0 0.3rem
+}
+
+textarea{
+   font-size: 0.4rem;
 }
 </style>
